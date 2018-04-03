@@ -57,13 +57,12 @@ public class InOrderSolution {
         if (root == null) {
             return;
         }
-        if (root.left != null) {
-            travelsalRecursive(root.left, result);
-        }
+        //下次调用会检查
+//        if (root.left != null) {
+        travelsalRecursive(root.left, result);
         //重要规则： 左子树结束遍历 或者 左子树为空 保存节点的值
         result.add(root.val);
-        if (root.right != null) {
-            travelsalRecursive(root.right, result);
-        }
+        travelsalRecursive(root.right, result);
+
     }
 }

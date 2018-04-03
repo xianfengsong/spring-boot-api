@@ -51,16 +51,11 @@ public class PreOrderSolution {
      * @param result
      */
     private void travelsalRecursive(TreeNode root,List<Integer> result){
-        if(root!=null){
-            result.add(root.val);
-        }else{
+        if(root==null){
             return;
         }
-        if(root.left!=null){
-            travelsalRecursive(root.left,result);
-        }
-        if(root.right!=null){
-            travelsalRecursive(root.right,result);
-        }
+        result.add(root.val);
+        travelsalRecursive(root.left,result);
+        travelsalRecursive(root.right,result);
     }
 }
