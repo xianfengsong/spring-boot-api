@@ -1,6 +1,7 @@
 package binarytree;
 
 import binarytree.traversa.InOrderSolution;
+import binarytree.traversa.LevelOrderSolution;
 import binarytree.traversa.TreeNode;
 
 import java.util.List;
@@ -10,13 +11,24 @@ import java.util.List;
  */
 public class Main {
     public static void main(String []args){
+        /*
+         1
+         2 3
+            4 5
+         */
         TreeNode root=new TreeNode(1);
-        TreeNode right=new TreeNode(2);
-//        right.left=new TreeNode(3);
-        root.left=right;
+        TreeNode left=new TreeNode(2);
+        TreeNode right=new TreeNode(3);
+        right.left=new TreeNode(4);
+        right.right=new TreeNode(5);
 
-        InOrderSolution s=new InOrderSolution();
-        List<Integer> result=s.inorderTraversal(root);
-        System.out.println(result.toString());
+        root.left=left;
+        root.right=right;
+
+        LevelOrderSolution l=new LevelOrderSolution();
+        l.levelOrder(root);
+//        InOrderSolution s=new InOrderSolution();
+//        List<Integer> result=s.inorderTraversal(root);
+//        System.out.println(result.toString());
     }
 }
