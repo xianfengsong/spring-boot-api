@@ -2,6 +2,7 @@ package binarytree;
 
 import binarytree.traversa.InOrderSolution;
 import binarytree.traversa.LevelOrderSolution;
+import binarytree.traversa.PostOrderSolution;
 import binarytree.traversa.TreeNode;
 
 import java.util.List;
@@ -27,6 +28,9 @@ public class Main {
 
         LevelOrderSolution l=new LevelOrderSolution();
         l.levelOrder(root);
+        PostOrderSolution p=new PostOrderSolution();
+        List<Integer>re=p.postorderTraversal(root);
+        System.out.println(re);
 //        InOrderSolution s=new InOrderSolution();
 //        List<Integer> result=s.inorderTraversal(root);
 //        System.out.println(result.toString());
