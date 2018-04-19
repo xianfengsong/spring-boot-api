@@ -1,9 +1,8 @@
 package binarytree;
 
-import binarytree.traversa.InOrderSolution;
+import binarytree.attribute.IsBalance;
 import binarytree.traversa.LevelOrderSolution;
 import binarytree.traversa.PostOrderSolution;
-import binarytree.traversa.TreeNode;
 
 import java.util.List;
 
@@ -12,17 +11,11 @@ import java.util.List;
  */
 public class Main {
     public static void main(String []args){
+
         /*
          1
          2 3
             4 5
-         1
-         2 3 (1)
-         2 4 5 (13)
-         2 4 (135)
-         2(1354)
-         (13542)->(24531)
-
          */
         TreeNode root=new TreeNode(1);
         TreeNode left=new TreeNode(2);
@@ -33,11 +26,13 @@ public class Main {
         root.left=left;
         root.right=right;
 
-        LevelOrderSolution l=new LevelOrderSolution();
-        l.levelOrder(root);
-        PostOrderSolution p=new PostOrderSolution();
-        List<Integer>re=p.postorderTraversal(root);
-        System.out.println(re);
+//        LevelOrderSolution l=new LevelOrderSolution();
+//        l.levelOrder(root);
+//        PostOrderSolution p=new PostOrderSolution();
+//        List<Integer>re=p.postorderTraversal(root);
+//        System.out.println(re);
+        IsBalance b=new IsBalance();
+        System.out.println(b.isBalanceSolution(root));
 //        InOrderSolution s=new InOrderSolution();
 //        List<Integer> result=s.inorderTraversal(root);
 //        System.out.println(result.toString());

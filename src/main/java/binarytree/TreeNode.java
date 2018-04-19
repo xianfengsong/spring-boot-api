@@ -1,4 +1,4 @@
-package binarytree.traversa;
+package binarytree;
 
 /**
  * Created by root on 18-4-3.
