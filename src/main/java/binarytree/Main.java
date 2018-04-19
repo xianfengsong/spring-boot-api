@@ -16,6 +16,13 @@ public class Main {
          1
          2 3
             4 5
+         1
+         2 3 (1)
+         2 4 5 (13)
+         2 4 (135)
+         2(1354)
+         (13542)->(24531)
+
          */
         TreeNode root=new TreeNode(1);
         TreeNode left=new TreeNode(2);
