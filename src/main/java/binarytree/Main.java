@@ -1,10 +1,6 @@
 package binarytree;
 
 import binarytree.attribute.IsBalance;
-import binarytree.traversa.LevelOrderSolution;
-import binarytree.traversa.PostOrderSolution;
-
-import java.util.List;
 
 /**
  * Created by root on 18-4-3.
@@ -36,5 +32,18 @@ public class Main {
 //        InOrderSolution s=new InOrderSolution();
 //        List<Integer> result=s.inorderTraversal(root);
 //        System.out.println(result.toString());
+    }
+
+    public static boolean hasPathSum(TreeNode root, int sum) {
+
+        if (root == null) {
+            return false;
+        }
+
+        if (root.val == sum && root.left == null && root.right == null) {
+            return true;
+        }
+        return hasPathSum(root.left, sum - root.val)
+                || hasPathSum(root.right, sum - root.val);
     }
 }
