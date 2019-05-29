@@ -4,6 +4,13 @@ import binarytree.TreeNode;
 import org.junit.Test;
 
 //timeout
+
+/**
+ * 改进了超时的问题
+ * 1. 传参时添加了 start end 避免了创建新数组
+ * 2. 之前忽略了一个规则 ：在中序遍历找到root的左右子树节点后，如果左子树有x个节点
+ * 后序数组的前x个节点也一定在左子树
+ */
 public class BuildByInOrderV2 {
     @Test
     public void test() {
@@ -33,7 +40,7 @@ public class BuildByInOrderV2 {
             index++;
         }
         int leftSize = index - inStart;
-        //????
+        //根据上面的规则，找到后序数组的起止位置
         root.left = getRoot(inOrder, inStart, index - 1, postOrder, pStart, pStart + (index - inStart) - 1);
         root.right = getRoot(inOrder, index + 1, inEnd, postOrder, pStart + leftSize, pEnd - 1);
         return root;
