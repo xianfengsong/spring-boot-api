@@ -35,13 +35,13 @@ public class AddNext {
         while (!queue.isEmpty()) {
             int size = queue.size();
 
-            for (int i = 0; i < size; i++) {
-                //注意越界[0,size-1]
-                if (i + 1 < size - 1) {
-                    //先不要poll,会改变index
-                    queue.peek().next = queue.get(i + 1);
-                }
+            while (size-- > 0) {
+                //size会减一
                 Node n = queue.poll();
+                //还有节点，就是next
+                if (size > 0) {
+                    n.next = queue.poll();
+                }
                 if (n.left != null) {
                     queue.offer(n.left);
                 }
