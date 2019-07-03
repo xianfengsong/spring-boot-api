@@ -40,6 +40,7 @@ public class AddNext {
                 Node n = queue.poll();
                 //还有节点，就是next
                 if (size > 0) {
+                    //todo 应该用peek吧
                     n.next = queue.poll();
                 }
                 if (n.left != null) {

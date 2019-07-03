@@ -75,6 +75,17 @@ public class Main {
         sort.sort(arr);
         check(arr);
     }
+    /**
+     * 归并排序
+     * 最好 O(nlogn)
+     * 最坏 O(nlogn)
+     */
+    @Test
+    public void merge(){
+        Sort sort = new MergeSort();
+        sort.sort(arr);
+        check(arr);
+    }
 
     private void check(Integer[] arr){
         Assert.assertEquals("排序失败",expect,Arrays.asList(arr));
