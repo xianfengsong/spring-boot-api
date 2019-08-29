@@ -33,7 +33,7 @@ public class SerializedTree {
     }
 
     /**
-     * 用深度优先遍历(前序遍历)，缺点是null比较多
+     * 方法一：用深度优先遍历(前序遍历)，优点是字符串顺序自然就是节点连接关系，缺点是需要用很多null占位
      *
      * @param root
      * @return
@@ -88,8 +88,8 @@ public class SerializedTree {
     }
 
     /**
-     * 用层序遍历编码，最后的几个null可以去掉
-     *
+     * 方法二：用层序遍历编码，最后一层的null都可以去掉
+     * 序列化执行层序遍历，保存节点值到字符串
      * @param root
      * @return
      */
@@ -118,9 +118,9 @@ public class SerializedTree {
     }
 
     /**
-     * 反序列化：用一个list用层序访问的顺序保存节点，遍历list中的节点a
-     * 规律 left(a)=v[i+1]，那么 right(a)=v[i+2]
-     *
+     * 反序列化：用层序遍历序列化，那么也用层序遍历的顺序反序列化，
+     * 用一个list按层序访问的顺序保存节点，遍历list中的节点a
+     * 根据规律 left(a)=v[i+1]，那么 right(a)=v[i+2]，还原节点的连接关系
      * @param data
      * @return
      */
@@ -130,12 +130,14 @@ public class SerializedTree {
         }
         List<TreeNode> nodes = new ArrayList<>();
         String[] values = data.split(",");
-        //rootIndex保存nodes中的位置，valueIndex保存编码位置
+        //nIndex是反序列化后节点数组的指针，valueIndex是遍历字符串的指针
         int nIndex = 0, vIndex = 0;
         //第一个编码得到根节点
         TreeNode root = parse(values[vIndex++]);
         //先把根节点保存到nodes
         nodes.add(root);
+        //nIndex递增，遍历节点数组
+        //循环中反序列化字符串得到节点插入nodes数组，并且更新节点的连接关系
         //如果所有节点都被添加到nodes说明解析完成，退出
         while (nIndex < vIndex) {
             //取当前根节点
