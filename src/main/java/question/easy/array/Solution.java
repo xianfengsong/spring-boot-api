@@ -2,12 +2,15 @@ package question.easy.array;
 
 import org.junit.Assert;
 import org.junit.Test;
+import java.util.Arrays;
 
 /**
  * 初级算法： 数组
  * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/21/
  */
+
 public class Solution {
+
     /**
      * 从"排序"数组中删除重复项,在原地删除重复出现的元素
      * 不要使用额外的数组空间
@@ -124,4 +127,16 @@ public class Solution {
     }
 
 
+    //是否重复
+    public boolean isRepeat(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 1; i++) {
+
+            if (nums[i] == nums[i + 1]) {
+                return true;
+            }
+
+        }
+        return false;
+    }
 }

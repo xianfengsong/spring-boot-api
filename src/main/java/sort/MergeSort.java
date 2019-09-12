@@ -7,7 +7,7 @@ import java.util.Arrays;
  * date 19-7-3 上午9:54 <br/>
  * Desc: 归并排序
  * 关键点：
- * 1.“递归”：递归地把数组二分成left,right,直到大小为1
+ * 1.“递归”：递归地把数组二等分成left,right,直到大小为1
  * 2.合并左右数组时，要申请 大小=左右长度和 的空间，记得处理完所有元素
  */
 public class MergeSort implements Sort {
