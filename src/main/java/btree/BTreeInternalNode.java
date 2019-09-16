@@ -139,7 +139,8 @@ class BTreeInternalNode<K extends Comparable<K>> extends AbstractBTreeNode<K> {
 
         //key may exist in child
         //key在子节点中，如果子树根节点关键字不少于degree（阶m/2）执行递归删除
-        //如果子树根节点
+        //3a 如果子树根节点关键字<degree,先尝试从子树根节点的兄弟节点移除一个关键字提拔到当期节点，当期节点被替换掉的关键字给子树根节点
+        //3b 如果兄弟节点关键字也都<degree，就把子树根节点和一个兄弟合并，同时当期节点去掉一个关键字，插入合并后的子节点
         else {
             int i = 0;
             //find proper child the key may exists in
@@ -154,19 +155,23 @@ class BTreeInternalNode<K extends Comparable<K>> extends AbstractBTreeNode<K> {
                 target.deleteNotEmpty(key);
             } else {
                 AbstractBTreeNode<K> sibling;
-                //try to find replacement from predecessor
+                //对应情况 3a
+                //先让从子节点左边兄弟取关键字
                 if (i > 0 && (sibling = children[i - 1]).nkey() >= degree) {
-                    //copy brother's last child
+                    //抢左边兄弟的最后一个child，放到子节点children中
                     if (!target.isLeaf()) {
                         AbstractBTreeNode<K> sub = sibling.deleteChild(nchild); //last child
                         target.insertChild(sub, 0);
                     }
+                    //移除左兄弟的最大关键字
                     K repKey = sibling.deleteKey(sibling.nkey() - 1);    //maximum key
+                    //把左兄弟的最大关键字提到当前节点，这里返回的repKey是被替换的旧关键字，它小于
                     repKey = setKey(repKey, i - 1);
+                    //旧关键字比提拔上来的新key小，但比target中的key都大，所以插入target，这样子树关键字个数满足条件，
                     target.insertKey(repKey);
                     target.deleteNotEmpty(key);
                 }
-                //try to find replacement from follower
+                //去右边兄弟抢节点，同上，就是改成取最小节点
                 else if (i < nkey && (sibling = children[i + 1]).nkey() >= degree) {
                     if (!target.isLeaf()) {
                         AbstractBTreeNode<K> sub = sibling.deleteChild(0);  //first child
@@ -177,16 +182,20 @@ class BTreeInternalNode<K extends Comparable<K>> extends AbstractBTreeNode<K> {
                     target.insertKey(repKey);
                     target.deleteNotEmpty(key);
                 }
-                //merge child with one of it's sibling
+                //左右兄弟都抢不到，只能和兄弟合并
                 else {
-                    //merge with predecessor sibling
+                    //如果左边有兄弟，和它合并
                     if (i > 0) {
+                        //当期节点也去掉一个关键字，下放到子节点（因为少了一个child,该去掉一个key）
                         K repKey = this.deleteKey(i - 1);
                         sibling = children[i - 1];
                         sibling.merge(repKey, target);
+                        //去掉之前的子节点
                         this.deleteChild(target);
+                        //在合并后的新节点删除key
                         sibling.deleteNotEmpty(key);
                     } else {
+                        //和右边兄弟合并
                         K repKey = this.deleteKey(i);
                         sibling = children[i + 1];
                         target.merge(repKey, sibling);

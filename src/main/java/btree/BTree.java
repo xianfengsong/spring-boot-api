@@ -44,6 +44,8 @@ public class BTree<K extends Comparable<K>> {
     public void delete(K key) {
         AbstractBTreeNode<K> node = root;
         node.deleteNotEmpty(key);
+        //特殊情况，因为合并和下放，导致当期节点关键字空了
+        // 修改root指向第一个子节点（这时最多只有这一个子节点了）
         if (node.nkey() == 0) {
             //shrink
             root = node.getChild(0);
