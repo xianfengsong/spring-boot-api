@@ -3,14 +3,101 @@ package question.easy.array;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
- * 初级算法： 数组
+ * 初级算法： 数组类
+ *
+ * 数组问题处理经验：
+ * 写完要检查越界情况
+ * 如果是查找类的问题，可以用Arrays.sort先排序,或者使用hashmap保存数据
+ *
  * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/21/
  */
 
 public class Solution {
+    /**
+     * 判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
+     * <p>
+     * 数字 1-9 在每一行只能出现一次。
+     * 数字 1-9 在每一列只能出现一次。
+     * 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/valid-sudoku
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     */
+    //保证每个元素只读一次，所以每次循环，只能取一个元素，然后把它插入不同的位置
+    public boolean isValidSudoku(char[][] board) {
+        HashMap<Integer, Integer>[] col = new HashMap[9];
+        HashMap<Integer, Integer>[] row = new HashMap[9];
+        HashMap<Integer, Integer>[] box = new HashMap[9];
+        for (int i = 0; i < 9; i++) {
+            col[i] = new HashMap<>();
+            row[i] = new HashMap<>();
+            box[i] = new HashMap<>();
+        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                char c = board[i][j];
+                if (c == '.') continue;
+                int val = (int) c;
+                //元素放入第j列
+                col[j].put(val, col[j].getOrDefault(val, 0) + 1);
+                //元素放入第i行
+                row[i].put(val, row[i].getOrDefault(val, 0) + 1);
+                //放入第index小单元格
+                int index = j / 3 + i / 3 * 3;
+                box[index].put(val, box[index].getOrDefault(val, 0) + 1);
+                //分别检查行列和小单元格是否已经存在val
+                if (row[i].get(val) > 1 || col[j].get(val) > 1 || box[index].get(val) > 1)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Test
+    public void tt() {
+        char cc = '2';
+        int c = (int) cc - '1';
+        System.out.println(c);
+    }
+
+    /**
+     * 优化 使用bit数组代替 hashmap
+     * @param board
+     * @return
+     */
+    public boolean isValidSudokuV2(char[][] board) {
+        int[] col = new int[9];
+        int[] row = new int[9];
+        int[] box = new int[9];
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                char c = board[i][j];
+                if (c == '.') continue;
+                //c-'1'转成 0到8的数字，然后通过左移 set对应bit
+                int val = 1 << c - '1';
+
+                int index = j / 3 + i / 3 * 3;
+                //行列或单元格，与上val结果>0，说明第val个bit上为已经1，出现重复
+                //必须在赋值前，否则永远返回false
+                if (((col[j] | row[i] | box[index]) & val) > 0) {
+                    return false;
+                }
+                //通过或运算set 行/列/box中元素的左起第val个bit为1
+                box[index] |= val;
+                col[j] |= val;
+                row[i] |= val;
+
+            }
+        }
+
+        return true;
+    }
 
     /**
      * 从"排序"数组中删除重复项,在原地删除重复出现的元素
@@ -20,6 +107,8 @@ public class Solution {
      * @return 数组的新长度
      */
     public int removeDuplicates(int[] nums) {
+        Set<String> s=new HashSet<>();
+        s.clear();
         if (nums == null || nums.length == 0) {
             return 0;
         }
@@ -129,15 +218,106 @@ public class Solution {
 
 
     //是否重复
+    //先排序
     public boolean isRepeat(int[] nums) {
         Arrays.sort(nums);
         for (int i = 0; i < nums.length - 1; i++) {
-
             if (nums[i] == nums[i + 1]) {
                 return true;
             }
-
         }
         return false;
+    }
+
+    /**
+     * 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+     * 分析：
+     * 异或大法好
+     */
+    public int theOnlyOne(int[] nums) {
+        //因为其他元素都恰好出现两次，所以全部异或一遍，结果就是出现一次的数字（a^b^a=b）
+        int result = nums[0];
+        for (int i = 1; i < nums.length - 1; i++) {
+            result ^= nums[i];
+        }
+        return result;
+    }
+
+    /**
+     * 给定两个数组，编写一个函数来计算它们的交集。
+     * 要么排序，要么用hashmap，没有其他好方法？
+     *
+     * @return 输出结果中每个元素出现的次数，应与元素在两个数组中出现的次数一致
+     */
+    public int[] intersect(int[] nums1, int[] nums2) {
+
+        byte[] mark = new byte[nums1.length];
+        List<Integer> list = new ArrayList<>();
+        for (int aNums2 : nums2) {
+            for (int j = 0; j < nums1.length; j++) {
+                if (mark[j] == 0 && aNums2 == nums1[j]) {
+                    mark[j] = 1;
+                    list.add(aNums2);
+                    break;
+                }
+            }
+        }
+
+        int[] result = new int[list.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = list.get(i);
+        }
+        return result;
+    }
+
+    @Test
+    public void t() {
+        int[] i = {1, 2};
+        int[] j = new int[3];
+        j[0] = 0;
+        System.arraycopy(i, 0, j, 1, i.length);
+        for (int jj : j) {
+            System.out.println(jj);
+        }
+
+    }
+
+    /**
+     * 给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+     * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/27/
+     * 分析：
+     * 用数组表示的整数，把它加一，再还原成数组
+     * <p>
+     * 注意越界的问题，如果转成数字可能会越界,所以选择按位一个个处理
+     * int 最大值只有10个数字 21474_83647
+     * long 最大值只有19个数字 9223_37203_68547_75807
+     *
+     * @param digits
+     * @return
+     */
+    public int[] plusOne(int[] digits) {
+
+        int size = digits.length;
+        if (size == 0) return digits;
+        boolean plus = true;
+        for (int i = size - 1; i >= 0 && plus; i--) {
+
+            digits[i] += 1;
+            if (digits[i] == 10) {
+                digits[i] = 0;
+                plus = true;
+            } else {
+                plus = false;
+            }
+
+        }
+        //扩容
+        if (plus) {
+            //这样复制比较好写，代替System.arrayCopy()
+            digits = new int[digits.length + 1];
+            //如果还要进位，那第一位一定是1
+            digits[0] = 1;
+        }
+        return digits;
     }
 }
