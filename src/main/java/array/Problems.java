@@ -1,4 +1,4 @@
-package question.easy.array;
+package array;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,15 +7,95 @@ import java.util.*;
 
 /**
  * 初级算法： 数组类
- *
+ * <p>
  * 数组问题处理经验：
+ * 记得考虑使用位运算
  * 写完要检查越界情况
  * 如果是查找类的问题，可以用Arrays.sort先排序,或者使用hashmap保存数据
- *
+ * <p>
  * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/21/
  */
 
-public class Solution {
+public class Problems {
+
+
+    /**
+     * 旋转矩阵
+     * <p>
+     * 给定一个 n × n 的二维矩阵表示一个图像。
+     * 将图像顺时针旋转 90 度。
+     * <p>
+     * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/31/
+     * 第一遍遍历：用字符数组保存每一列的倒序
+     * 第二遍遍历：依次把字符数组的值填充到矩阵
+     * 缺点：没必要用额外的字符串数组存储
+     */
+    public void rotateV1(int[][] matrix) {
+        int n = matrix[0].length;
+        String[] lines = new String[n];
+        for (int i = 0; i < n; i++) {
+            for (int j = n - 1; j >= 0; j--) {
+                if (lines[i] == null) {
+                    lines[i] = "";
+                }
+                lines[i] += String.valueOf(matrix[j][i]) + ",";
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            String[] arr = lines[i].split(",");
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = Integer.valueOf(arr[j]);
+            }
+        }
+    }
+
+    /**
+     * 旋转矩阵V2
+     * 先按链接左上角和右下角的对角线翻转，然后把矩阵的每一行倒序
+     */
+    public void rotateV2(int[][] matrix) {
+        int n = matrix.length;
+        // 对角线翻转
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int tmp = matrix[j][i];
+                matrix[j][i] = matrix[i][j];
+                matrix[i][j] = tmp;
+            }
+        }
+        // 倒序每一行
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - j - 1];
+                matrix[i][n - j - 1] = tmp;
+            }
+        }
+    }
+
+    /**
+     * 旋转矩阵V3
+     * 思路：https://leetcode-cn.com/problems/rotate-image/solution/xuan-zhuan-tu-xiang-by-leetcode/
+     * 还是O(n^2) 每次遍历同时移动四条边上的元素
+     * 这里抽象出一个长方形，里面是要移动的元素，每层有4个长方形，由外向内逐层处理长方形内的元素
+     * 实现方式没看懂
+     */
+    public void rotateV3(int[][] matrix) {
+        int n = matrix.length;
+
+        for (int i = 0; i < (n + 1) / 2; i++) {
+            //每个长方形里的元素个数？
+            for (int j = 0; j < n / 2; j++) {
+                int temp = matrix[n - 1 - j][i];
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - j - 1];
+                matrix[n - 1 - i][n - j - 1] = matrix[j][n - 1 - i];
+                matrix[j][n - 1 - i] = matrix[i][j];
+                matrix[i][j] = temp;
+            }
+        }
+    }
+
+
     /**
      * 判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
      * <p>
@@ -29,6 +109,7 @@ public class Solution {
      */
     //保证每个元素只读一次，所以每次循环，只能取一个元素，然后把它插入不同的位置
     public boolean isValidSudoku(char[][] board) {
+        //map数组，保存9行 9列 9个单元格的数组
         HashMap<Integer, Integer>[] col = new HashMap[9];
         HashMap<Integer, Integer>[] row = new HashMap[9];
         HashMap<Integer, Integer>[] box = new HashMap[9];
@@ -58,15 +139,11 @@ public class Solution {
         return true;
     }
 
-    @Test
-    public void tt() {
-        char cc = '2';
-        int c = (int) cc - '1';
-        System.out.println(c);
-    }
-
     /**
+     * 判断一个 9x9 的数独是否有效
      * 优化 使用bit数组代替 hashmap
+     * 遍历一次数独表格，
+     *
      * @param board
      * @return
      */
@@ -79,12 +156,13 @@ public class Solution {
             for (int j = 0; j < 9; j++) {
                 char c = board[i][j];
                 if (c == '.') continue;
-                //c-'1'转成 0到8的数字，然后通过左移 set对应bit
+                //val使用对应的bit保存数独中的数字
+                // c-'1'转成 0到8的数字，然后通过左移 set对应bit值为1
                 int val = 1 << c - '1';
-
+                //index计算当前的数字属于哪个单元格
                 int index = j / 3 + i / 3 * 3;
                 //行列或单元格，与上val结果>0，说明第val个bit上为已经1，出现重复
-                //必须在赋值前，否则永远返回false
+                //必须在赋值前，否则永远>0
                 if (((col[j] | row[i] | box[index]) & val) > 0) {
                     return false;
                 }
@@ -92,7 +170,6 @@ public class Solution {
                 box[index] |= val;
                 col[j] |= val;
                 row[i] |= val;
-
             }
         }
 
@@ -107,7 +184,7 @@ public class Solution {
      * @return 数组的新长度
      */
     public int removeDuplicates(int[] nums) {
-        Set<String> s=new HashSet<>();
+        Set<String> s = new HashSet<>();
         s.clear();
         if (nums == null || nums.length == 0) {
             return 0;
@@ -270,17 +347,6 @@ public class Solution {
         return result;
     }
 
-    @Test
-    public void t() {
-        int[] i = {1, 2};
-        int[] j = new int[3];
-        j[0] = 0;
-        System.arraycopy(i, 0, j, 1, i.length);
-        for (int jj : j) {
-            System.out.println(jj);
-        }
-
-    }
 
     /**
      * 给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
