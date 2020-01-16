@@ -1,9 +1,13 @@
 package array;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.*;
 
 /**
  * 初级算法： 数组类
@@ -16,7 +20,7 @@ import java.util.*;
  * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/21/
  */
 
-public class Problems {
+public class BasicProblems {
 
 
     /**
