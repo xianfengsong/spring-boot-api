@@ -10,45 +10,45 @@ import org.junit.Test;
  * 考虑多种情况下，如何移动指针
  * 越界的错误出现好几次
  * pre/nxt不能越界 l/r不能越界
+ * 错误：
+ * 1. 没考虑不旋转的情况，比如[1,3]
+ * 2. 没考虑空数组
  */
 public class SearchRotateArray {
 
-    int[] a = new int[]{5, 7, 0, 1, 2, 3};
+    int[] nums = new int[]{1, 3};
 
-    public int search(int t) {
-        int l = 0, r = a.length - 1;
-        //t 是否在左边
-        boolean left = t >= a[0];
+    public int search(int target) {
+        int l = 0, r = nums.length - 1;
+        //target 是否在左边
+        boolean left = target >= nums[0];
         //防止pre/nxt越界
         while (l < r) {
             int m = (l + r) / 2;
-            if (a[m] == t) {
+            if (nums[m] == target) {
                 return m;
             } else {
-                if (m == 0 || m == a.length - 1) {
-                    return 0;
-                }
-                int pre = a[m - 1];
-                int nxt = a[m + 1];
+                int pre = m == 0 ? nums[0] : nums[m - 1];
+                int nxt = m == nums.length - 1 ? nums[m] : nums[m + 1];
                 //当前a[m] 是否在左边
-                boolean inLeft = a[m] >= a[0];
+                boolean inLeft = nums[m] >= nums[0];
 
                 if (inLeft == left) {
-                    if (a[m] < t) {
+                    if (nums[m] < target) {
                         //add m
-                        if (a[m] < nxt) {
+                        if (nums[m] < nxt) {
                             l = m + 1;
                         } else {
                             //meet end
-                            return 0;
+                            return -1;
                         }
                     } else {
                         //less m
-                        if (pre < a[m]) {
+                        if (pre < nums[m]) {
                             r = m - 1;
                         } else {
                             //meet end
-                            return 0;
+                            return -1;
                         }
                     }
 
@@ -61,19 +61,15 @@ public class SearchRotateArray {
                 }
             }
         }
-        if (a[l] == t) {
+        if (nums[l] == target) {
             return l;
         }
-        return 0;
+        return -1;
     }
 
     @Test
-    public void t() {
-        Assert.assertEquals(2, search(0));
-        Assert.assertEquals(3, search(1));
-        Assert.assertEquals(0, search(4));
-        Assert.assertEquals(0, search(5));
-        Assert.assertEquals(1, search(7));
+    public void target() {
+        Assert.assertEquals(1, search(3));
     }
 
 }
