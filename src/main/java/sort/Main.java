@@ -1,21 +1,18 @@
 package sort;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringJoiner;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * 测试 排序
  */
 public class Main {
 
-    private Integer[] arr = new Integer[]{2, 8, 3, 7, 1, 7, 0};
-    private List<Integer> expect = Arrays.asList(0, 1, 2, 3, 7, 7, 8);
+    private Integer[] arr = new Integer[]{5, 4, 3, 6, 1, 1};
+    private List<Integer> expect = Arrays.asList(1, 1, 3, 4, 5, 6);
 
     //------------------三种简单排序-----------------------------
     /**

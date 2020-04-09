@@ -8,8 +8,10 @@ package sort;
 public interface Sort {
     void sort(Integer [] arr);
     default void swap(Integer []arr,int a,int b){
-        int temp=arr[a];
-        arr[a]=arr[b];
-        arr[b]=temp;
+        if (a != b) {
+            int temp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = temp;
+        }
     }
 }

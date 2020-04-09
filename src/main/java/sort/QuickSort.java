@@ -29,22 +29,28 @@ public class QuickSort implements Sort{
         }
     }
     /**
-     *  找到p: p左边都比arr[compare]小，右边大
+     *  循环不变式A：
+     *  p = getPosition 返回值
+     *  对于任何 i < p: arr[i]<=a[p] , i>=p arr[i]>a[p]
+     *
      */
     private int getPosition(int l,int r,Integer [] arr){
-        //被比较的基准值位置
-        int compare=l;
-        int p=compare+1;
+        //基准值
+        int compare = arr[l];
+        int p = l + 1;
+        //循环不变式A1：
+        // 1. l<i<=r
+        // 2. 对于i < p , arr[i] < compare ,i >=p arr[i]>=compare
         for(int i=p;i<=r;i++){
-            if(arr[i]<arr[compare]){
+            if (arr[i] < compare) {
+                //交换:把小于基准值的堆到0-p这一侧，每次交换p+1
                 swap(arr,i,p);
-                //实现上p就是被交换到左边的所有元素的边界
-                //p从l+1开始，交换n次就+n
                 p++;
             }
         }
-        //因为p++了,而且arr[p-1]<compare,可以交换
-        swap(arr,compare,p-1);
+        //因为循环不变式A1，把compare放到p-1后,循环不变式A得到满足
+        //根据循环不变式A1 arr[p-1]<compare
+        swap(arr, l, p - 1);
         return p-1;
     }
 }
