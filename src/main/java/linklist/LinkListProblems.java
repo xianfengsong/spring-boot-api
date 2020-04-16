@@ -3,21 +3,12 @@ package linklist;
 import org.junit.Test;
 
 public class LinkListProblems {
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
+    private ListNode newHead = new ListNode(0);
 
     /* *****************
      * 反转一个单链表。
      * 你可以迭代或递归地反转链表。你能否用两种方法解决这道题？
      * *****************/
-
-    private ListNode newHead = new ListNode(0);
 
     /**
      * 我的版本
@@ -85,8 +76,6 @@ public class LinkListProblems {
         return prev;
     }
 
-    //-------------------------------------------------------
-
     /**
      * 反转链表中指定范围的节点
      * 问题：范围内的节点反转后，要和原来的链表重新连接
@@ -134,17 +123,7 @@ public class LinkListProblems {
         return head;
     }
 
-
-    //-------------------------------------
-
-    /**
-     * Merge two sorted linked lists and return it as a new list.
-     * The new list should be made by splicing together the nodes of the first two lists.
-     * Example:
-     * <p>
-     * Input: 1->2->4, 1->3->4
-     * Output: 1->1->2->3->4->4
-     */
+    //-------------------------------------------------------
 
     /**
      * 递归解法
@@ -176,6 +155,18 @@ public class LinkListProblems {
         }
     }
 
+
+    //-------------------------------------
+
+    /**
+     * Merge two sorted linked lists and return it as a new list.
+     * The new list should be made by splicing together the nodes of the first two lists.
+     * Example:
+     * <p>
+     * Input: 1->2->4, 1->3->4
+     * Output: 1->1->2->3->4->4
+     */
+
     /**
      * 迭代法：两个变量 一个是头节点，一个是遍历l1,l2的指针
      * 问题：如果声明变量head做返回值，一开始head是null,还要为它赋值
@@ -202,8 +193,6 @@ public class LinkListProblems {
         cur.next = l1 == null ? l2 : l1;
         return prevHead.next;
     }
-
-    //----------------------------
 
     /**
      * 删除链表的倒数第N个节点
@@ -238,6 +227,9 @@ public class LinkListProblems {
 
         return dummy.next;
     }
+
+    //----------------------------
+
     @Test
     public void test() {
         ListNode h = new ListNode(1);
@@ -247,6 +239,15 @@ public class LinkListProblems {
         while (r != null) {
             System.out.println(r.val);
             r = r.next;
+        }
+    }
+
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
         }
     }
 }

@@ -1,6 +1,5 @@
 package sort;
 
-import java.awt.SystemTray;
 import java.util.Arrays;
 
 /**
@@ -12,17 +11,17 @@ public class SelectSort implements Sort {
 
     @Override
     public void sort(Integer[] arr) {
-        for(int i=0;i<arr.length;i++){
-            int indexMin=i;
-            for(int j=i+1;j<arr.length;j++){
-                if(arr[j]<arr[indexMin]){
-                    indexMin=j;
+        for (int i = 0; i < arr.length; i++) {
+            int indexMin = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[indexMin]) {
+                    indexMin = j;
                 }
             }
-            if(indexMin!=i){
-                int t=arr[i];
-                arr[i]=arr[indexMin];
-                arr[indexMin]=t;
+            if (indexMin != i) {
+                int t = arr[i];
+                arr[i] = arr[indexMin];
+                arr[indexMin] = t;
             }
             System.out.println(Arrays.asList(arr));
         }

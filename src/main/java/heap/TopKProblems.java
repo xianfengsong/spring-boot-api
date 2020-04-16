@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.PriorityQueue;
-import java.util.Random;
 
 /**
  * 记住堆的性质：1. 大小 n<=n.child 2.结构：最多两层上有叶节点&节点靠左&到叶节点最大距离<=log2n
@@ -17,30 +16,17 @@ import java.util.Random;
  */
 public class TopKProblems {
 
-    /**
-     * 方法三：快排模仿
-     * 因为5个数第2大就是第4小
-     * 要求top k large，用快排的分治法找到第n-k+1小的元素
-     * 和快排不同的是，只需要使用partition中包含arr[n-k]的一半数据
-     * 所以不会访问整个递归树，平均复杂度 O(n)，最差O(n^2)和快排一样
-     *
-     * @param nums
-     * @param k
-     * @return
-     */
-    int idx = 0;
-
     @Test
     public void test() {
-        int[] nums = new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2, 4, 7, 8, 5, 6};
-        Assert.assertEquals(8, findKthLargestV3(nums, 2));
-
-
+        int[] nums = new int[]{6, 6, 5, 5, 1, 1};
+        Assert.assertTrue(findKthLargestV3(nums, 2) == 6);
+        Assert.assertTrue(findKthLargestV3(nums, 3) == 5);
+        Assert.assertTrue(findKthLargestV3(nums, 5) == 1);
     }
 
     /**
      * 方法一：手动大根堆
-     *
+     * <p>
      * 手动实现堆的解法，把n的元素放入大根堆，然后用堆尾元素替换根节点k-1次，提取根节点，最后根节点就是top k
      * 1.手动实现堆，处理数组下标太麻烦
      * 2.没必要构造n个元素的堆，k个元素的堆也可以
@@ -111,56 +97,57 @@ public class TopKProblems {
         return heap.poll();
     }
 
-    private int findKthLargestV3(int[] nums, int k) {
-        idx = nums.length - k;
-
-        return quickSelect(nums, 0, nums.length - 1);
-    }
-
-    private int quickSelect(int[] nums, int l, int r) {
-        if (l == r) {
-            return nums[l];
-        }
-        Random rnd = new Random();
-        int p = l + rnd.nextInt(r - l + 1);
-        p = partition(nums, l, r, p);
-        if (p == idx) {
-            return nums[p];
-        }
-        //如果是快排，这里两个分支都要执行
-        if (p < idx) {
-            return quickSelect(nums, p + 1, r);
-        } else {
-            return quickSelect(nums, l, p - 1);
-        }
-    }
-
     /**
-     * 返回p,l~p比arr[p]小，p~r比arr[p]大
+     * 方法三：快排模仿
+     * 因为5个数第2大就是第4小
+     * 要求top k large，用快排的分治法找到第n-k+1小的元素
+     * 和快排不同的是，只需要使用partition中包含arr[n-k]的一半数据
+     * 所以不会访问整个递归树，平均复杂度 O(n)，最差O(n^2)和快排一样
      *
-     * @param nums nums
-     * @param l    left
-     * @param r    right
-     * @param i    随机哨兵位置
-     * @return p
+     * @param nums
+     * @param k
+     * @return
      */
-    private int partition(int[] nums, int l, int r, int i) {
-        int pivot = nums[i];
-        swap(nums, l, i);
-        int p = l + 1;
-        for (int j = p; j <= r; j++) {
-            if (nums[j] < pivot) {
-                swap(nums, p, j);
-                p++;
-            }
+    public int findKthLargestV3(int[] nums, int k) {
+        // k是要求的第几大(从1开始计数),k-1即是数组中的序号(0开始计数)
+        return findKthLargest(nums, 0, nums.length - 1, k - 1);
+    }
+
+    public int findKthLargest(int[] nums, int low, int high, int k) {
+        int index = partition(nums, low, high);
+        if (index == k)
+            return nums[index];
+        else if (index > k)
+            return findKthLargest(nums, low, index - 1, k);
+        else
+            return findKthLargest(nums, index + 1, high, k);
+    }
+
+    // 同快排的partation,每次确定一个枢轴的位置,并返回其index
+    // 找第k 大 的数就把数组按大->小排列
+    private int partition(int[] nums, int low, int high) {
+        int pivot = nums[low];
+
+        while (low < high) {
+            while (low < high && nums[low] >= pivot)
+                low++;
+            nums[high] = nums[low];
+            while (low < high && nums[high] <= pivot) // nums[high]<=pivot 体现出把数组按大->小排列
+                high--;
+            nums[low] = nums[high];
+
+
         }
-        swap(nums, l, p - 1);
-        return p - 1;
+
+        nums[low] = pivot;
+        return low;
     }
 
     private void swap(int[] nums, int a, int b) {
-        int t = nums[a];
-        nums[a] = nums[b];
-        nums[b] = t;
+        if (a != b) {
+            int t = nums[a];
+            nums[a] = nums[b];
+            nums[b] = t;
+        }
     }
 }

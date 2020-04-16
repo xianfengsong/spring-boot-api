@@ -90,6 +90,7 @@ public class SerializedTree {
     /**
      * 方法二：用层序遍历编码，最后一层的null都可以去掉
      * 序列化执行层序遍历，保存节点值到字符串
+     *
      * @param root
      * @return
      */
@@ -121,6 +122,7 @@ public class SerializedTree {
      * 反序列化：用层序遍历序列化，那么也用层序遍历的顺序反序列化，
      * 用一个list按层序访问的顺序保存节点，遍历list中的节点a
      * 根据规律 left(a)=v[i+1]，那么 right(a)=v[i+2]，还原节点的连接关系
+     *
      * @param data
      * @return
      */

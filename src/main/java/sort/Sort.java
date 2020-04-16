@@ -6,8 +6,9 @@ package sort;
  * Desc:
  */
 public interface Sort {
-    void sort(Integer [] arr);
-    default void swap(Integer []arr,int a,int b){
+    void sort(Integer[] arr);
+
+    default void swap(Integer[] arr, int a, int b) {
         if (a != b) {
             int temp = arr[a];
             arr[a] = arr[b];

@@ -15,6 +15,7 @@ import java.util.Stack;
  * TreeNode(int x) { val = x; }
  * }
  * 二叉树前序遍历
+ *
  * @author root
  */
 public class PreOrderSolution {
@@ -30,15 +31,16 @@ public class PreOrderSolution {
      * 非递归遍历
      * 出栈顺序即遍历顺序
      * 每次循环都是开始向下一层，（这是节点出栈时机）
+     *
      * @param root
      * @param result
      */
-    private void trvelsalIterator(TreeNode root,List<Integer> result){
-        Stack<TreeNode> stack=new Stack<>();
+    private void trvelsalIterator(TreeNode root, List<Integer> result) {
+        Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        while(!stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-            if(node!=null){
+            if (node != null) {
                 result.add(node.val);
                 //可能为null下次循环检查
                 stack.push(node.right);
@@ -49,15 +51,16 @@ public class PreOrderSolution {
 
     /**
      * 递归遍历 调用顺序和逻辑上顺序一致
+     *
      * @param root
      * @param result
      */
-    private void travelsalRecursive(TreeNode root,List<Integer> result){
-        if(root==null){
+    private void travelsalRecursive(TreeNode root, List<Integer> result) {
+        if (root == null) {
             return;
         }
         result.add(root.val);
-        travelsalRecursive(root.left,result);
-        travelsalRecursive(root.right,result);
+        travelsalRecursive(root.left, result);
+        travelsalRecursive(root.right, result);
     }
 }

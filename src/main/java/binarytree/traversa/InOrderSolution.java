@@ -22,29 +22,31 @@ public class InOrderSolution {
      * 每次循环都是左子树已经遍历完成（这是节点出栈时机）
      * 可以出栈，然后处理右子树
      * （此时节点看做根节点）
+     *
      * @param root
      * @param result
      */
     private void travelsalIterator(TreeNode root, List<Integer> result) {
         Stack<TreeNode> stack = new Stack<>();
         //左节点遍历完成
-        putAllLeft(root,stack);
+        putAllLeft(root, stack);
         while (!stack.isEmpty()) {
-            TreeNode node=stack.pop();
+            TreeNode node = stack.pop();
             result.add(node.val);
-            putAllLeft(node.right,stack);
+            putAllLeft(node.right, stack);
         }
     }
 
     /**
      * 遍历左节点&入栈（包括本节点）
+     *
      * @param node
      * @param stack
      */
-    private void putAllLeft(TreeNode node,Stack<TreeNode> stack){
-        while (node!=null){
+    private void putAllLeft(TreeNode node, Stack<TreeNode> stack) {
+        while (node != null) {
             stack.push(node);
-            node=node.left;
+            node = node.left;
         }
     }
 

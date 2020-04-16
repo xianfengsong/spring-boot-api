@@ -14,10 +14,10 @@ public class MergeSort implements Sort {
 
     @Override
     public void sort(Integer[] arr) {
-        Integer []result=mergeSort(arr);
-        int i=0;
-        for(Integer r:result){
-            arr[i++]=r;
+        Integer[] result = mergeSort(arr);
+        int i = 0;
+        for (Integer r : result) {
+            arr[i++] = r;
         }
     }
 

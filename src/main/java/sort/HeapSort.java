@@ -13,37 +13,39 @@ public class HeapSort implements Sort {
     @Override
     public void sort(Integer[] arr) {
         buildMaxHeap(arr);
-        int len=arr.length;
-        for(int i=arr.length-1;i>0;i--){
+        int len = arr.length;
+        for (int i = arr.length - 1; i > 0; i--) {
             //0是当前堆的最大根节点，交换到数组末尾
-            swap(arr,i,0);
+            swap(arr, i, 0);
             //最后一个节点位置已确定
             len--;
             //整理堆
-            heapify(arr,0,len);
+            heapify(arr, 0, len);
         }
     }
-    private void buildMaxHeap(Integer[] arr){
-        for(int i= (int) Math.floor(arr.length/2);i>=0;i--){
-            heapify(arr,i,arr.length);
+
+    private void buildMaxHeap(Integer[] arr) {
+        for (int i = (int) Math.floor(arr.length / 2); i >= 0; i--) {
+            heapify(arr, i, arr.length);
         }
     }
-    private void heapify(Integer [] arr,int root,int len){
-        int l=root*2+1;
-        int r=root*2+2;
-        int max=root;
+
+    private void heapify(Integer[] arr, int root, int len) {
+        int l = root * 2 + 1;
+        int r = root * 2 + 2;
+        int max = root;
         //找到左中右节点中的最大节点
-        if(l<len&&arr[l]>arr[max]){
-            max=l;
+        if (l < len && arr[l] > arr[max]) {
+            max = l;
         }
-        if(r<len&&arr[r]>arr[max]){
-            max=r;
+        if (r < len && arr[r] > arr[max]) {
+            max = r;
         }
-        if(max!=root){
+        if (max != root) {
             //最大节点值放到root上
-            swap(arr,root,max);
+            swap(arr, root, max);
             //给root节点的初始值(现在是arr[max])找到合适位置
-            heapify(arr,max,len);
+            heapify(arr, max, len);
         }
     }
 }

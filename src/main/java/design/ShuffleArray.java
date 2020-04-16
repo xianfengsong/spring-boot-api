@@ -57,7 +57,7 @@ public class ShuffleArray {
         return b.toString();
     }
 
-    class Solution {
+    public static class Solution {
         Random rand = new Random();
         private int[] array;
         private int[] original;
