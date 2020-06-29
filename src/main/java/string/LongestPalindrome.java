@@ -61,6 +61,46 @@ public class LongestPalindrome {
         return maxLength; // return length of LPS
     }
 
+    /**
+     * 逆向思考，虽然是找最长的，但查找时从中心向外拓展
+     * 每个循环中分别按回文串是奇数或偶数的情况验证，有点像二叉树，每层有两个决策路径
+     * O(n*2n) = O(n^1) 空间O(1)
+     */
+    public static String longestPalindrome_1(String s) {
+        if (s == null || s.length() <= 1) {
+            return s;
+        }
+        int len = s.length();
+        int maxWidth = 1, start = 0;
+        //从1开始，0没有意义
+        for (int i = 1; i < len; i++) {
+            //回文串是偶数个字符
+            int l = i - 1, r = i;
+            while (l > 0 & r < len & s.charAt(l) == s.charAt(r)) {
+                int width = r - l + 1;
+                if (width > maxWidth) {
+                    start = l;
+                    maxWidth = width;
+                }
+                l--;
+                r++;
+            }
+            //回文串是奇数个字符
+            l = i - 1;
+            r = i + 1;
+            while (l > 0 && r < len && s.charAt(l) == s.charAt(r)) {
+                int width = r - l + 1;
+                if (width > maxWidth) {
+                    start = l;
+                    maxWidth = width;
+                }
+                l--;
+                r++;
+            }
+        }
+        return s.substring(start, start + maxWidth);
+    }
+
     public static String longestPalindrome(String s) {
         if (s == null || s.length() <= 1) {
             return s;
