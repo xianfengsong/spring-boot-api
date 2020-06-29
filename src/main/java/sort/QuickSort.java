@@ -1,5 +1,7 @@
 package sort;
 
+import java.util.Random;
+
 /**
  * author Xianfeng <br/>
  * date 19-6-14 下午2:43 <br/>
@@ -22,51 +24,33 @@ public class QuickSort implements Sort {
         quickSort(0, arr.length - 1, arr);
     }
 
+    Random rand = new Random();
     private void quickSort(int l, int r, Integer[] arr) {
-        if (l < r) {
-            int p = getPosition(l, r, arr);
+        if (l < r & r < arr.length & l >= 0) {
+            int p = partition(l, r, arr);
             quickSort(l, p - 1, arr);
             quickSort(p + 1, r, arr);
         }
-    }
-    /**
-     *  从左边扫描
-     *  循环不变式A：
-     *  对于任何 i < p: arr[i]<=a[p] , i>=p arr[i]>a[p]
-     *
-     */
-//    private int getPosition(int l,int r,Integer [] arr){
-//        //基准值
-//        int compare = arr[l];
-//        int p = l + 1;
-//        //循环不变式A1：
-//        // 1. l<i<=r
-//        // 2. 对于i < p , arr[i] < compare ,i >=p arr[i]>=compare
-//        for(int i=p;i<=r;i++){
-//            if (arr[i] < compare) {
-//                //交换:把小于基准值的堆到0-p这一侧，每次交换p+1
-//                swap(arr,i,p);
-//                p++;
-//            }
-//        }
-//        //因为循环不变式A1，把compare放到p-1后,循环不变式A得到满足
-//        //根据循环不变式A1 arr[p-1]<compare
-//        swap(arr, l, p - 1);
-//        return p-1;
-//    }
 
-    /**
-     * 两侧扫描
-     */
-    private int getPosition(int l, int r, Integer[] arr) {
-        int pivot = arr[l];
+    }
+
+    private int partition(int l, int r, Integer[] arr) {
+        int rd = rand.nextInt(r - l) + l + 1;
+        int pivot = arr[rd];
+        arr[rd] = arr[l];
+        arr[l] = pivot;
         while (l < r) {
-            while (l < r && arr[r] >= pivot) r--;
+            while (l < r && arr[r] >= pivot) {
+                r--;
+            }
             arr[l] = arr[r];
-            while (l < r && arr[l] <= pivot) l++;
+            while (l < r && arr[l] <= pivot) {
+                l++;
+            }
             arr[r] = arr[l];
         }
         arr[l] = pivot;
-        return r;
+        return l;
     }
+
 }
