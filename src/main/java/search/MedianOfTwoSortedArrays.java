@@ -1,10 +1,42 @@
 package search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 两个有序数组中位数
+ * 4.两个有序数组中位数
+ * 注意复杂度要求
  * https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
  */
 public class MedianOfTwoSortedArrays {
+    //O(m+n)解法，不满足要求
+    public double find(int[] nums1, int[] nums2) {
+        int l = nums1.length + nums2.length;
+        if (l == 0) {
+            return 0.0d;
+        }
+        List<Integer> merge = new ArrayList<>();
+        int i = 0, j = 0;
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] > nums2[j]) {
+                merge.add(nums2[j++]);
+            } else {
+                merge.add(nums1[i++]);
+            }
+        }
+        while (j < nums2.length) {
+            merge.add(nums2[j++]);
+        }
+        while (i < nums1.length) {
+            merge.add(nums1[i++]);
+        }
+        if (l % 2 == 0) {
+            return ((double) merge.get(l / 2) + (double) merge.get(l / 2 - 1)) / 2.0d;
+        } else {
+            return (double) merge.get(l / 2);
+        }
+    }
+
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         //get m n,n>=m
         int m = nums1.length;
@@ -60,7 +92,40 @@ public class MedianOfTwoSortedArrays {
             }
         }
         return 0.0;
+    }
 
+    public double findMedianSortedArraysV2(int[] nums1, int[] nums2) {
+        int l = nums1.length + nums2.length;
+        if (l == 0) {
+            return 0.0d;
+        }
+        if (l % 2 == 0) {
+            return ((double) getKth(l / 2, nums1, 0, nums2, 0) + (double) getKth(l / 2 + 1, nums1, 0, nums2, 0)) / 2.0d;
+        } else {
+            return (double) getKth(l / 2 + 1, nums1, 0, nums2, 0);
+        }
+    }
 
+    public int getKth(int k, int[] nums1, int i, int[] nums2, int j) {
+        if (i >= nums1.length) {
+            return nums2[j + k - 1];
+        }
+        if (j >= nums2.length) {
+            return nums1[i + k - 1];
+        }
+        if (k == 1) {
+            return Math.min(nums1[i], nums2[j]);
+        }
+        int ni = Math.min(i + k / 2, nums1.length) - 1;
+        int nj = Math.min(j + k / 2, nums2.length) - 1;
+
+        int a = nums1[ni], b = nums2[nj];
+        if (a > b) {
+            k = k - (nj + 1 - j);
+            return getKth(k, nums1, i, nums2, nj + 1);
+        } else {
+            k = k - (ni + 1 - i);
+            return getKth(k, nums1, ni + 1, nums2, j);
+        }
     }
 }
