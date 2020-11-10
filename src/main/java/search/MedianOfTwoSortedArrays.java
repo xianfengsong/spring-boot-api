@@ -128,4 +128,11 @@ public class MedianOfTwoSortedArrays {
             return getKth(k, nums1, ni + 1, nums2, j);
         }
     }
+
+    public static void main(String[] args) {
+        int[][] arr = new int[1][0];
+        arr[0] = new int[]{};
+        System.out.println(arr.length);
+        System.out.println(arr[0].length);
+    }
 }

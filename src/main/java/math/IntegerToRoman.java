@@ -8,7 +8,7 @@ public class IntegerToRoman {
         System.out.println(new IntegerToRoman().intToRoman(8));
     }
 
-    public String intToRoman(int num) {
+    private String intToRoman(int num) {
         Map<Integer, String> map = new LinkedHashMap<>();
         map.put(1000, "M");
         map.put(900, "CM");
