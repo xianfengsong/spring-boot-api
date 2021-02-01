@@ -4,6 +4,7 @@ package string;
  * author Xianfeng <br/>
  * date 20-5-20 下午8:55 <br/>
  * Desc:
+ * LC no.5 返回最长回文子串
  */
 public class LongestPalindrome {
 
@@ -64,7 +65,7 @@ public class LongestPalindrome {
     /**
      * 逆向思考，虽然是找最长的，但查找时从中心向外拓展
      * 每个循环中分别按回文串是奇数或偶数的情况验证，有点像二叉树，每层有两个决策路径
-     * O(n*2n) = O(n^1) 空间O(1)
+     * O(n*2n) = O(n^2) 空间O(1)
      */
     public static String longestPalindrome_1(String s) {
         if (s == null || s.length() <= 1) {
@@ -101,27 +102,29 @@ public class LongestPalindrome {
         return s.substring(start, start + maxWidth);
     }
 
+    /**
+     * 我的思路：暴力直线思维，设回文字串长度n,先假设n和字符串len相等，验证假设，如果假设错误，那再假设n=len-1，重复。。
+     */
     public static String longestPalindrome(String s) {
         if (s == null || s.length() <= 1) {
             return s;
         }
-        int span = s.length();
-        while (span > 1) {
-            int space = s.length() - span;
+        int maxLen = s.length();
+        while (maxLen > 1) {
             int begin = 0;
-            while (begin <= space) {
-                int l = begin, r = begin + span - 1;
+            while (begin + maxLen <= s.length()) {
+                int l = begin, r = begin + maxLen - 1;
                 while (s.charAt(l) == s.charAt(r) && l < r) {
                     l++;
                     r--;
                 }
                 if (l >= r) {
-                    return s.substring(begin, begin + span);
+                    return s.substring(begin, begin + maxLen);
                 }
                 begin++;
             }
-            span--;
+            maxLen--;
         }
-        return null;
+        return s.substring(0, 1);
     }
 }
