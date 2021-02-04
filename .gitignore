@@ -1,0 +1,31 @@
+# mac
+.DS_Store
+
+# windows
+Desktop.ini
+Thumbs.db
+
+# maven
+target/
+
+# eclipse
+.settings/
+.project
+.classpath
+.springBeans
+
+# logs
+*.log
+logs
+
+# project
+gmivideo-crawler-dao/pre/
+gmivideo-crawler-web/temp/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+.factorypath
