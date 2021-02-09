@@ -34,8 +34,49 @@ package leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution79 {
+
+    char[][] mk;
+    String s;
+
     public boolean exist(char[][] board, String word) {
+        if (board.length == 0 || word == null || word.length() == 0) {
+            return false;
+        }
+        mk = new char[board.length][board[0].length];
+        s = word;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (foo(board, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+
+    public boolean foo(char[][] board, int i, int j, int k) {
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
+            return false;
+        }
+        if (k == s.length() - 1) {
+            return true;
+        }
+        if (mk[i][j] == 1) {
+            return false;
+        } else {
+            mk[i][j] = 1;
+        }
+        boolean result = false;
+        if (board[i][j] == s.charAt(k)) {
+            mk[i][j] = 1;
+            k += 1;
+            result = foo(board, i - 1, j, k)
+                    || foo(board, i + 1, j, k)
+                    || foo(board, i, j - 1, k)
+                    || foo(board, i, j + 1, k);
+        }
+        mk[i][j] = 0;
+        return result;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
