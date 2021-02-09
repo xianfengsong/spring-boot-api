@@ -58,7 +58,7 @@ class Solution79 {
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
             return false;
         }
-        if (k == s.length() - 1) {
+        if (k == s.length()) {
             return true;
         }
         if (mk[i][j] == 1) {
@@ -77,6 +77,14 @@ class Solution79 {
         }
         mk[i][j] = 0;
         return result;
+    }
+    public static void main(String []args){
+        char [][] b = new char[3][3];
+        b[0]="abc".toCharArray();
+        b[1]="opq".toCharArray();
+        b[2]="xyz".toCharArray();
+
+        System.out.println(new Solution79().exist(b,"cba"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
