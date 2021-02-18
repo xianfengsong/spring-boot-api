@@ -34,18 +34,20 @@ package leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution79 {
-
-    char[][] mk;
+    /**
+     * 这mk可以用特殊字符替换board中已访问的方法代替，不使用额外存储
+     */
+    boolean[][] mk;
     String s;
 
     public boolean exist(char[][] board, String word) {
         if (board.length == 0 || word == null || word.length() == 0) {
             return false;
         }
-        mk = new char[board.length][board[0].length];
+        mk = new boolean[board.length][board[0].length];
         s = word;
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
+            for (int j = 0; j < board[0].length; j++) {
                 if (foo(board, i, j, 0)) {
                     return true;
                 }
@@ -58,33 +60,41 @@ class Solution79 {
         if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
             return false;
         }
-        if (k == s.length()) {
-            return true;
-        }
-        if (mk[i][j] == 1) {
+        //这 要放到越界判断前面
+//        if(k==s.length()){
+//            return true;
+//        }
+        if (mk[i][j]) {
             return false;
         } else {
-            mk[i][j] = 1;
+            mk[i][j] = true;
         }
         boolean result = false;
         if (board[i][j] == s.charAt(k)) {
-            mk[i][j] = 1;
             k += 1;
+            //注意要先判断k的大小，否则进入递归后可能因为越界失败
+            if(k==s.length()){
+                return true;
+            }
             result = foo(board, i - 1, j, k)
                     || foo(board, i + 1, j, k)
                     || foo(board, i, j - 1, k)
                     || foo(board, i, j + 1, k);
         }
-        mk[i][j] = 0;
+        //注意回溯位置
+        mk[i][j] = false;
         return result;
     }
     public static void main(String []args){
         char [][] b = new char[3][3];
-        b[0]="abc".toCharArray();
-        b[1]="opq".toCharArray();
-        b[2]="xyz".toCharArray();
+        b[0]="abce".toCharArray();
+        b[1]="sfcs".toCharArray();
+        b[2]="adee".toCharArray();
 
-        System.out.println(new Solution79().exist(b,"cba"));
+        System.out.println(new Solution79().exist(b,"see"));
+        b = new char[1][1];
+        b[0]=new char[]{'a'};
+        System.out.println(new Solution79().exist(b,"a"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
