@@ -66,10 +66,11 @@ class Solution140 {
 
     private void foo(String s, List<String> dict, StringBuilder r) {
         if (s.length() == 0) {
-            ans.add(r.toString());
+            ans.add(r.toString().trim());
         } else {
             for (String w : dict) {
                 if (s.startsWith(w)) {
+                    //注意回溯位置，还原参数栈
                     String t = r.toString();
                     r.append(w).append(" ");
                     foo(s.substring(w.length()), dict, r);
@@ -81,8 +82,8 @@ class Solution140 {
     }
 
     public static void main(String[] args) {
-        String s = "pineapplepenapple";
-        List<String> l = Arrays.asList("apple", "pen", "applepen", "pine", "pineapple");
+        String s = "catsanddog";
+        List<String> l = Arrays.asList("cat", "cats", "and", "sand", "dog");
         System.out.println(new Solution140().wordBreak(s, l));
     }
 }
