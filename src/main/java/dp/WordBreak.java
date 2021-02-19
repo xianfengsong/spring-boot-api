@@ -94,12 +94,22 @@ public class WordBreak {
         dp[0]=true;
         int l = s.length();
         //遍历所有字串，i起点，j终点
-        for(int i=0;i<l;i++){
-            //注意dp数组边界，和substring左开右闭
-            for(int j=i+1;j<=l;j++){
-                //避免true被false替换
-                if(dp[i] && wordDict.contains(s.substring(i,j))){
-                    dp[j]=true;
+//        for(int i=0;i<l;i++){
+//            //注意dp数组边界，和substring左开右闭
+//            for(int j=i+1;j<=l;j++){
+//                //避免true被false替换
+//                if(dp[i] && wordDict.contains(s.substring(i,j))){
+//                    dp[j]=true;
+//                }
+//            }
+//        }
+        //比上面少了一些遍历
+        for(int i=1;i<=l;i++){
+            for(int j=0;j<i;j++){
+                //找到任意让dp[i]为true的位置j即可
+                if(dp[j]&&wordDict.contains(s.substring(j,i))){
+                    dp[i]=true;
+                    break;
                 }
             }
         }

@@ -47,43 +47,42 @@ package leetcode.editor.cn;
 // 👍 415 👎 0
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution140 {
-
-    List<String> ans = new ArrayList<>();
-
+    Map<String, List<String>> m = new HashMap<>();
     public List<String> wordBreak(String s, List<String> wordDict) {
         if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
-            return ans;
+            return new ArrayList<>();
         }
-        foo(s, wordDict, new StringBuilder());
+        return foo(s, wordDict);
+    }
+    private List<String> foo(String s, List<String> dict) {
+        List<String> ans = new ArrayList<>();
+        if (s.length() != 0) {
+            if (m.containsKey(s)) {
+                return m.get(s);
+            }
+            for (String w : dict) {
+                if (s.startsWith(w)) {
+                    List<String> subAns = foo(s.substring(w.length()), dict);
+                    for (String sub : subAns) {
+                        String a=w + " " + sub;
+                        ans.add(a.trim());
+                    }
+                    m.put(s, ans);
+                }
+            }
+        }else{
+            ans.add("");
+        }
         return ans;
     }
 
-    private void foo(String s, List<String> dict, StringBuilder r) {
-        if (s.length() == 0) {
-            ans.add(r.toString().trim());
-        } else {
-            for (String w : dict) {
-                if (s.startsWith(w)) {
-                    //注意回溯位置，还原参数栈
-                    String t = r.toString();
-                    r.append(w).append(" ");
-                    foo(s.substring(w.length()), dict, r);
-                    r = new StringBuilder(t);
-                }
-            }
-
-        }
-    }
-
     public static void main(String[] args) {
-        String s = "catsanddog";
-        List<String> l = Arrays.asList("cat", "cats", "and", "sand", "dog");
+        String s = "catsandog";
+        List<String> l = Arrays.asList("cats","dog","sand","and","cat");
         System.out.println(new Solution140().wordBreak(s, l));
     }
 }
