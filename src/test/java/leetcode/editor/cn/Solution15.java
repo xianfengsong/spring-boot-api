@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
 class Solution15 {
 
     Map<Integer, Long> m = new HashMap<>();
-
+    Set<String> f = new HashSet<>();
     public List<List<Integer>> threeSum(int[] nums) {
         Set<List<Integer>> ans = new HashSet<>();
         m= Arrays.stream(nums).boxed().collect(Collectors.groupingBy(i->i,Collectors.counting()));
@@ -66,19 +66,25 @@ class Solution15 {
         List<List<Integer>> ans = new ArrayList<>();
         m.put(target, m.get(target) - 1);
         for (int n : nums) {
+            String key = Math.max(n,target)+"/"+Math.min(n,target);
+            if(f.contains(key)){
+                continue;
+            }
             long old = m.get(n);
             if(old==0){
                 continue;
             }
-            int e = -target - n;
+            int e = - target - n;
             m.put(n, old - 1);
             if (m.getOrDefault(e, 0L) > 0) {
                 List<Integer> a = new ArrayList<>();
                 a.add(target);
                 a.add(e);
                 a.add(n);
-                a.sort(Integer::compareTo);
                 ans.add(a);
+                f.add(key);
+                f.add(Math.max(e,target)+"/"+Math.min(e,target));
+                f.add(Math.max(e,n)+"/"+Math.min(e,n));
             }
             m.put(n, old);
         }
