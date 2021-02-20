@@ -1,7 +1,7 @@
 package btree;
 
 
-import org.junit.Assert;
+//import org.junit.Assert;
 
 /**
  * 一个特殊的B树实现 <br>
@@ -177,8 +177,8 @@ public class BTreeSimple<Key extends Comparable<Key>, Value> {
             //非叶子节点
             for (int j = 0; j < n.m; j++) {
                 if (j + 1 == n.m || less(key, n.children[j + 1].key)) {
-                    Assert.assertEquals("非叶子节点的key应该和子节点第一个key相同？", n.children[j].key,
-                            n.children[j].next.children[0].key);
+//                    Assert.assertEquals("非叶子节点的key应该和子节点第一个key相同？", n.children[j].key,
+//                            n.children[j].next.children[0].key);
                     Node u = delete(n.children[j].next, key, ht - 1);
                     //删除后子节点关键字变化
                     if (n.children[j].key != u.children[0].key) {

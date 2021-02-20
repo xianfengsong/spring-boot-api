@@ -35,22 +35,22 @@ import java.util.Map;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution22 {
+    List<String> ans = new ArrayList<>();
     public List<String> generateParenthesis(int n) {
-        return foo(n,n,"");
+        foo(n,n,"");
+        return ans;
     }
-    private List<String> foo(int l,int r,String s){
-        List<String> ans = new ArrayList<>();
+    private void foo(int l,int r,String s){
         if(l==0&&r==0){
             ans.add(s);
         }else{
             if(l>0){
-                ans.addAll(foo(l-1,r,s+"("));
+                foo(l-1,r,s+"(");
             }
             if(l<r&&r>0){
-                ans.addAll(foo(l,r-1,s+")"));
+                foo(l,r-1,s+")");
             }
         }
-        return ans;
     }
     public static void main(String []args){
         System.out.println(new Solution22().generateParenthesis(3));
