@@ -47,6 +47,7 @@ package leetcode.editor.cn;//给你一个链表数组，每个链表都已经按
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import linklist.ListNode;
@@ -65,7 +66,7 @@ import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 class Solution23 {
 
     public ListNode mergeKLists(ListNode[] lists) {
-        Queue<ListNode> q = new PriorityQueue<>(lists.length);
+        Queue<ListNode> q = new PriorityQueue<>(lists.length, Comparator.comparingInt(o -> o.val));
         for (ListNode n : lists) {
             q.offer(n);
         }
@@ -76,17 +77,20 @@ class Solution23 {
             c.next = new ListNode(min.val);
             c = c.next;
             if (min.next != null) {
-                q.offer(min);
+                q.offer(min.next);
             }
         }
         return ans.next;
     }
     public static void main(String []args){
-        ListNode a = new ListNode(1,new ListNode(2));
-        ListNode t= a;
-        a=a.next;
-        System.out.println(t.val);
-        System.out.println(a.val);
+        ListNode a = new ListNode(1,new ListNode(1,new ListNode(2)));
+        ListNode b = new ListNode(1,new ListNode(3,new ListNode(4)));
+        ListNode c = new ListNode(2,new ListNode(5));
+        ListNode d = new Solution23().mergeKLists(new ListNode[]{a, b, c});
+        while (d!=null){
+            System.out.println(d.val);
+            d=d.next;
+        }
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
