@@ -55,5 +55,10 @@ class Solution221 {
         }
         return max * max;
     }
+    public static void main(String []args){
+        char [][] m = new char[1][1];
+        m[0][0]='0';
+        System.out.println(new Solution221().maximalSquare(m));
+    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
