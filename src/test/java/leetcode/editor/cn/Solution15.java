@@ -54,12 +54,12 @@ class Solution15 {
     Map<Integer, Long> m = new HashMap<>();
     Set<String> f = new HashSet<>();
     public List<List<Integer>> threeSum(int[] nums) {
-        Set<List<Integer>> ans = new HashSet<>();
+        List<List<Integer>> ans = new ArrayList<>();
         m= Arrays.stream(nums).boxed().collect(Collectors.groupingBy(i->i,Collectors.counting()));
         for (int n : nums) {
             ans.addAll(twoSum(nums, n));
         }
-        return new ArrayList<>(ans);
+        return ans;
     }
 
     public List<List<Integer>> twoSum(int[] nums, int target) {
