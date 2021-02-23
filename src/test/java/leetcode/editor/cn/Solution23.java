@@ -66,9 +66,14 @@ import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 class Solution23 {
 
     public ListNode mergeKLists(ListNode[] lists) {
+        if(lists==null||lists.length==0){
+            return null;
+        }
         Queue<ListNode> q = new PriorityQueue<>(lists.length, Comparator.comparingInt(o -> o.val));
         for (ListNode n : lists) {
-            q.offer(n);
+            if(n!=null){
+                q.offer(n);
+            }
         }
         ListNode c = new ListNode();
         ListNode ans = c;
