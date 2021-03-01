@@ -52,12 +52,12 @@ class Solution200 {
     public int numIslands(char[][] grid) {
         for(int i=0;i<grid.length;i++){
             for(int j=0;j<grid[0].length;j++){
-                t(grid,i,j);
+                t(grid,i,j,false);
             }
         }
         return ans;
     }
-    public void t(char[][]arr,int i,int j){
+    public void t(char[][]arr,int i,int j,boolean mk){
         if(i<0||i>=arr.length||j<0||j>=arr[0].length){
             return;
         }
@@ -65,14 +65,15 @@ class Solution200 {
         if(m==c){
             return;
         }
-        if('0'==c){
-            arr[i][j]=m;
-        }else{
-            t(arr,i+1,j);
-            t(arr,i-1,j);
-            t(arr,i,j-1);
-            t(arr,i,j+1);
-            ans+=1;
+        arr[i][j]=m;
+        if('1'==c){
+            t(arr,i+1,j,true);
+            t(arr,i-1,j,true);
+            t(arr,i,j-1,true);
+            t(arr,i,j+1,true);
+            if(!mk){
+                ans+=1;
+            }
         }
     }
 }
