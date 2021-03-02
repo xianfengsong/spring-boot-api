@@ -50,42 +50,40 @@ package leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution33 {
+    /**
+     * 二分法，把折半条件细分成4种
+     * @param nums
+     * @param target
+     * @return
+     */
     public int search(int[] nums, int target) {
         int i=0,j=nums.length-1;
-        int p = nums[j];
-        while (i<j){
-            int m=(i+j)/2;
-            if(nums[m]<=p){
-                j=m;
-            }else{
-                i=m+1;
-            }
-        }
-        p = i;
-        int ans=0;
-        if(target>nums[0]){
-            ans=find(0,p-1,nums,target);
-        }else{
-            ans=find(p,nums.length-1,nums,target);
-        }
-        return nums[ans]==target?ans:0;
-    }
-    public static int find(int i,int j,int[]a,int t){
-        while (i<j){
-            int m=(i+j)/2;
-            if(a[m]==t){
+        while (i<=j) {
+
+            int m = (i + j) / 2;
+            if(nums[m]==target){
                 return m;
-            } else if(a[m]<t){
-                i=m+1;
-            }else{
-                j=m-1;
+            }
+            if (nums[0] <= nums[m]) {
+                if (target >= nums[i] && target < nums[m]) {
+                    j = m - 1;
+                } else {
+                    i = m + 1;
+                }
+            } else {
+                if (target > nums[m] && target <= nums[j]) {
+                    i = m + 1;
+                } else {
+                    j = m - 1;
+                }
             }
         }
-        return i;
+        return -1;
     }
+
     public static void main(String []args){
         int [] arr= new int[]{2,3,4,5,0,1};
-        System.out.println(new Solution33().search(arr,-1));
+        System.out.println(new Solution33().search(arr,1));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
