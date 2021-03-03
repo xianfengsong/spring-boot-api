@@ -37,32 +37,28 @@ package leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class NumMatrix {
-    int [] dp;
-    int i,j;
+    int[][] m;
+    int i, j;
+
     public NumMatrix(int[][] matrix) {
-        i=matrix.length;
-        j=matrix[0].length;
-        dp=new int[i*j];
-        for(int r=0;r<i;r++){
-            for(int c=0;c<j;c++){
-                int idx=r*j+c;
-                if(idx==0){
-                    dp[0]=matrix[0][0];
-                }else{
-                    dp[idx]=dp[idx-1]+matrix[r][c];
+        i = matrix.length;
+        if (i > 0) {
+            j = matrix[0].length;
+            m = new int[i + 1][j + 1];
+            for (int r = 1; r <= i; r++) {
+                for (int c = 1; c <= j; c++) {
+                    m[r][c] = m[r - 1][c] + m[r][c - 1] - m[r - 1][c - 1] + matrix[r - 1][c - 1];
                 }
             }
         }
     }
-    
+
     public int sumRegion(int row1, int col1, int row2, int col2) {
-        int x1=row1*i+col1;
-        int y1=row1*i+col2;
-        int sum = dp[x1]-dp[y1-1];
-        int x2=row2*i+col2;
-        int y2=row2*i+col1;
-        sum += dp[x2]-dp[y2-1];
-        return sum;
+        row1++;
+        col1++;
+        row2++;
+        col2++;
+        return m[row2][col2] - m[row2][col1 - 1] - m[row1 - 1][col2] + m[row1 - 1][col1 - 1];
     }
 }
 
