@@ -31,25 +31,30 @@ class Solution338 {
 
     public int[] countBits(int num) {
         ans = new int[num + 1];
-        int i = 0;
-        while (i++ < num) {
-            ans[i] = count(i);
+        Arrays.fill(ans, -1);
+        for (int i = 0; i <= num; i++) {
+            count(i, ans);
         }
         return ans;
     }
 
-    public int count(int num) {
-        int c = 0;
+    public void count(int num, int[] ans) {
+        int n = 0;
+        int copy = num;
         while (num > 0) {
-            c += num & 1;
+            n += num & 1;
             num = num >> 1;
+            if (ans[num] != -1) {
+                n += ans[num];
+                break;
+            }
         }
-        return c;
+        ans[copy] = n;
     }
 
-    public static void main(String []args){
-        Solution338 s= new Solution338();
-        System.out.println(Arrays.toString(s.countBits(2)));
+    public static void main(String[] args) {
+        Solution338 s = new Solution338();
+        System.out.println(Arrays.toString(s.countBits(5)));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
