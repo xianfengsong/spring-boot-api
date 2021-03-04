@@ -25,15 +25,20 @@ package leetcode.editor.cn;
 import java.util.Arrays;
 
 //leetcode submit region begin(Prohibit modification and deletion)
+
+/**
+ * 举例，推导计算过程，发现有重复计算
+ * 注意化简
+ */
 class Solution338 {
 
-    int[] ans;
-
     public int[] countBits(int num) {
-        ans = new int[num + 1];
-        Arrays.fill(ans, -1);
-        for (int i = 0; i <= num; i++) {
-            count(i, ans);
+        int[] ans = new int[num + 1];
+//        Arrays.fill(ans, -1);
+        ans[0]=0;
+        for (int i = 1; i <= num; i++) {
+            ans[i] = ans[i>>1] + (i&1);
+//            count(i, ans);
         }
         return ans;
     }
@@ -44,6 +49,7 @@ class Solution338 {
         while (num > 0) {
             n += num & 1;
             num = num >> 1;
+            //其实不用if 肯定存在
             if (ans[num] != -1) {
                 n += ans[num];
                 break;
