@@ -21,7 +21,15 @@
 
 注意要点：
 一般要O(logn)的，都可以尝试二分
-注意所有=号的使用是否合理，r<l还是r<=l
-注意每次移动的边界，r=mid还是r=mid-1,r=mid+1 ?
 注意二分也可以改变顺序，从左向右或从右向左
 发现单调性比较难
+有一个固定写法：
+ans
+while l<=r:
+   mid = (l+r)/2
+   if check(...):
+      ans = mid
+      r = mid - 1
+   else:
+      l = mid + 1
+return ans
