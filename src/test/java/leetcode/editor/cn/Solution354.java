@@ -1,4 +1,4 @@
-package leetcode.editor.cn.leetcode.editor.cn;//给你一个二维整数数组 envelopes ，其中 envelopes[i] = [wi, hi] ，表示第 i 个信封的宽度和高度。
+package leetcode.editor.cn;//给你一个二维整数数组 envelopes ，其中 envelopes[i] = [wi, hi] ，表示第 i 个信封的宽度和高度。
 //
 // 当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样。 
 //
@@ -45,17 +45,16 @@ import static java.util.Comparator.comparingInt;
 class Solution354 {
     public int maxEnvelopes(int[][] envelopes) {
         Integer [] index = new Integer[envelopes.length];
-        int [] size = new int[envelopes.length];
         for(int i=0;i<envelopes.length;i++){
-            size[i]=envelopes[i][0]*envelopes[i][1];
             index[i]=i;
         }
-        Arrays.sort(index, (o1, o2) -> size[o2]-size[o1]);
+        Arrays.sort(index, comparingInt(o -> envelopes[o][0] * envelopes[o][1]));
         int ans = 0;
         int [] mem = new int[index.length];
-        for(int i=1;i<index.length;i++){
+        for(int i=0;i<index.length-1;i++){
             int w = envelopes[index[i]][0];
             int h = envelopes[index[i]][1];
+            //
             for(int j=i-1;j>=0;j--){
                 int wj = envelopes[index[j]][0];
                 int hj = envelopes[index[j]][1];

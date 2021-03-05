@@ -78,5 +78,25 @@ class Solution410 {
         int [] arr={2};
         System.out.println(s.splitArray(arr,1));
     }
+
+    //可怜的小猪
+    //leetcode submit region begin(Prohibit modification and deletion)
+    static class Solution458 {
+        public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+            int r = minutesToTest/minutesToDie;
+            int num = 0,sum=1;
+            while (true){
+                if(sum>=buckets){
+                    break;
+                }
+                sum *= (r+1);
+                num+=1;
+            }
+            return num;
+        }
+        public static void main(String[]args){
+            System.out.println(new Solution458().poorPigs(16,15,45));
+        }
+    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
