@@ -45,45 +45,60 @@ package leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution132 {
+    private int part = 0;
+
     public int minCut(String s) {
-        int part = 0;
         int len = s.length();
-        String result = s;
-        while (result.length()!=0&&len>0){
-            String ans = clean(result,len);
-            if(result.equals(ans)){
-               len--;
-            }else{
-                part+=1;
-                len = ans.length();
+        if (len > 0) {
+            String ans = clean(s, len);
+            while (ans.length() == 0) {
+                len--;
+                ans = clean(s, len);
             }
-            result = ans;
+            part += 1;
+            if (!s.equals(ans) && s.length() != 1) {
+
+                int st = s.indexOf(ans);
+                int ed = st + ans.length();
+
+                if (st != 0) {
+                    minCut(s.substring(0, st));
+                }
+                if (ed <= s.length() - 1) {
+                    minCut(s.substring(ed));
+                }
+            }
         }
-        return Math.max(part-1,0);
+        return Math.max(part - 1, 0);
     }
-    public String clean(String s,int len){
-        int i =0,j=i+len-1;
-        char [] arr = s.toCharArray();
-        while (i<=j&&j<s.length()){
-            if(valid(arr,i,j)){
-                String match = s.substring(i,j+1);
-                return s.replaceFirst(match,"");
+
+    public String clean(String s, int len) {
+        if (len > s.length()) {
+            return s;
+        }
+        int i = 0, j = i + len - 1;
+        char[] arr = s.toCharArray();
+        while (i <= j && j < s.length()) {
+            if (valid(arr, i, j)) {
+                return s.substring(i, j + 1);
             }
             i++;
             j++;
         }
-        return s;
+        return "";
     }
-    public boolean valid(char [] arr,int i,int j){
-        while (i<j && arr[i]==arr[j]){
+
+    public boolean valid(char[] arr, int i, int j) {
+        while (i < j && arr[i] == arr[j]) {
             i++;
             j--;
         }
-        return i>=j;
+        return i >= j;
     }
-    public static void main(String []args){
-        Solution132 s=new Solution132();
-        System.out.println(s.minCut("a"));
+
+    public static void main(String[] args) {
+        Solution132 s = new Solution132();
+        System.out.println("452="+s.minCut("apjesgpsxoeiokmqmfgvjslcjukbqxpsobyhjpbgdfruqdkeiszrlmtwgfxyfostpqczidfljwfbbrflkgdvtytbgqalguewnhvvmcgxboycffopmtmhtfizxkmeftcucxpobxmelmjtuzigsxnncxpaibgpuijwhankxbplpyejxmrrjgeoevqozwdtgospohznkoyzocjlracchjqnggbfeebmuvbicbvmpuleywrpzwsihivnrwtxcukwplgtobhgxukwrdlszfaiqxwjvrgxnsveedxseeyeykarqnjrtlaliyudpacctzizcftjlunlgnfwcqqxcqikocqffsjyurzwysfjmswvhbrmshjuzsgpwyubtfbnwajuvrfhlccvfwhxfqthkcwhatktymgxostjlztwdxritygbrbibdgkezvzajizxasjnrcjwzdfvdnwwqeyumkamhzoqhnqjfzwzbixclcxqrtniznemxeahfozp"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
