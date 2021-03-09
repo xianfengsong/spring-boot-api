@@ -61,13 +61,13 @@ class Solution132 {
         int[] dp = new int[s.length()];
         dp[0] = 0;
         for (int i = 1; i < s.length(); i++) {
-            int min = s.length();
+            dp[i] = s.length();
             if (splits.contains(0 + "," + i)) {
                 dp[i] = 0;
             } else {
                 for (int j = i - 1; j >= 0; j--) {
                     if (splits.contains((j + 1) + "," + i)) {
-                        dp[i] = Math.min(dp[j] + 1, min);
+                        dp[i] = Math.min(dp[j] + 1, dp[i]);
                     }
                 }
             }
@@ -153,7 +153,7 @@ class Solution132 {
     public static void main(String[] args) {
         Solution132 s = new Solution132();
         System.out.println("452=" + s
-                .minCut("apjesgpsxoeiokmqmfgvjslcjukbqxpsobyhjpbgdfruqdkeiszrlmtwgfxyfostpqczidfljwfbbrflkgdvtytbgqalguewnhvvmcgxboycffopmtmhtfizxkmeftcucxpobxmelmjtuzigsxnncxpaibgpuijwhankxbplpyejxmrrjgeoevqozwdtgospohznkoyzocjlracchjqnggbfeebmuvbicbvmpuleywrpzwsihivnrwtxcukwplgtobhgxukwrdlszfaiqxwjvrgxnsveedxseeyeykarqnjrtlaliyudpacctzizcftjlunlgnfwcqqxcqikocqffsjyurzwysfjmswvhbrmshjuzsgpwyubtfbnwajuvrfhlccvfwhxfqthkcwhatktymgxostjlztwdxritygbrbibdgkezvzajizxasjnrcjwzdfvdnwwqeyumkamhzoqhnqjfzwzbixclcxqrtniznemxeahfozp"));
+                .minCut("abbab"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
