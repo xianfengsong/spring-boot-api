@@ -87,8 +87,10 @@ class Solution132 {
             } else {
                 return false;
             }
+        }else{
+            splits.add(key);
+            return true;
         }
-        return true;
     }
 
     private int part = 0;
