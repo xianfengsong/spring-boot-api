@@ -1,4 +1,4 @@
-package leetcode.editor.cn;
+package dp;
 //给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是回文。
 //
 // 返回符合要求的 最少分割次数 。 
@@ -43,10 +43,14 @@ package leetcode.editor.cn;
 // 👍 348 👎 0
 
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution132 {
+/**
+ * lc.132 有思路，但是实现有问题
+ */
+class PalindromePartitioningII {
     /**
      * 官方实现
      * 用bool[][]数组替换了map
@@ -195,12 +199,6 @@ class Solution132 {
             j--;
         }
         return i >= j;
-    }
-
-    public static void main(String[] args) {
-        Solution132 s = new Solution132();
-        System.out.println("452=" + s
-                .minCut("abbab"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
