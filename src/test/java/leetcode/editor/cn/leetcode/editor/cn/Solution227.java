@@ -68,12 +68,12 @@ class Solution227 {
                     num.push(num.pop() * num.pop());
                     signal.pop();
                 } else if (signal.peek() == '/') {
+                    num.pop();
                     if (last != 0) {
-                        num.pop();
                         num.push(num.pop() / last);
                     }
                     signal.pop();
-                } else if (s.charAt(i)!=' ') {
+                } else if (i<s.length() && s.charAt(i)!=' ') {
                     signal.push(s.charAt(i));
                 }
                 i++;
@@ -81,6 +81,7 @@ class Solution227 {
                 i++;
             } else {
                 signal.push(c);
+                i++;
             }
         }
         while (num.size() != 1) {
@@ -89,6 +90,10 @@ class Solution227 {
             num.push(a + b);
         }
         return num.pop();
+    }
+    public static void main(String []args){
+       Solution227 s = new Solution227();
+       s.calculate(" 3+5 / 2 ");
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
