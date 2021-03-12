@@ -44,6 +44,7 @@ class Solution331 {
 
     /**
      * 60mins,看提示才想到用栈，但是思路不清晰，看题解以构造树的过程为思路，完成下面代码
+     * 有错误：case= 1，#，#，1 过不了
      * @param preorder
      * @return
      */
@@ -67,10 +68,61 @@ class Solution331 {
         }
         return !st.isEmpty() && !"#".equals(st.peek());
     }
+    /**
+     * 使用递归，模拟前序遍历过程，如果正确会刚好遍历到字符结尾
+     */
+    public boolean isValidSerializationV1(String preorder) {
+        String [] nodes = preorder.split(",");
+        dfs(nodes);
+        //字符串不够用，或太长都不行
+        return valid && i>=nodes.length;
+    }
+    private int i=0;
+    private boolean valid=true;
+    public void dfs(String [] nodes){
+        if(i<nodes.length){
+            if("#".equals(nodes[i])){
+                i++;
+            }else{
+                i++;
+                dfs(nodes);
+                dfs(nodes);
+            }
+        }else{
+            //字符串不够用
+            valid = false;
+        }
+    }
+
+    /**
+     * 统计出入度
+     * 思路：对未填写#的树，每个叶子节点会有两个出度，用#填充全部叶节点后出度为0
+     * 如果字符串是前序遍历，沿着字符串计算树的出度，遍历结束应该为0
+     */
+    public boolean isValidSerializationV2(String preorder) {
+        String [] nodes = preorder.split(",");
+        //从1开始，遇到root后出度为2
+        int count = 1;
+        for(String n:nodes){
+            //未遍历完，不能为0
+            if(count==0){
+                return false;
+            }
+            if("#".equals(n)){
+                count--;
+                if(count<0){
+                    return false;
+                }
+            }else{
+                count++;
+            }
+        }
+        return count==0;
+    }
     public static void main(String []args){
         System.out.println("true?"+new Solution331().isValidSerialization("1,2,4,#,#,#,3,#,#"));
         System.out.println("true?"+new Solution331().isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#"));
-        System.out.println("false?"+new Solution331().isValidSerialization("1,#"));
+        System.out.println("false?"+new Solution331().isValidSerialization("1,#,#,1"));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
