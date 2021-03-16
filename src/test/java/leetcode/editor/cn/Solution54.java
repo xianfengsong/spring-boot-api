@@ -36,41 +36,36 @@ import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution54 {
-
-    int i = 0, j = 0;
+    //用特殊值处理第一个节点
+    int i = 0, j = -1;
     List<Integer> ans;
 
     public List<Integer> spiralOrder(int[][] matrix) {
         int r = matrix.length;
         int c = matrix[0].length;
-        int[][] direct = new int[4][2];
-        direct[0] = new int[]{0, 1};
-        direct[1] = new int[]{1, 0};
-        direct[2] = new int[]{0, -1};
-        direct[3] = new int[]{-1, 0};
-        int[] lens = new int[]{c - 1, r - 1};
+        int[][] direct = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        //保存上下/左右两种方向上的节点个数
+        int[] lens = new int[]{c, r};
 
         ans = new ArrayList<>();
-        ans.add(matrix[0][0]);
         int idx = 0, idxl = 0;
         while (ans.size() < r * c) {
-            int len = lens[idxl++ % 2];
-            trace(len, direct[idx], matrix);
+            int len = lens[idxl];
+            do {
+                i += direct[idx][0];
+                j += direct[idx][1];
+                ans.add(matrix[i][j]);
+            } while (--len > 0);
             idx = (idx + 1) % direct.length;
-            if (idx == direct.length - 1) {
-                lens[0]--;
-                lens[1]--;
-            }
+            idxl = (idxl + 1) % 2;
+            //遍历完左右方向后，上下方向上数量少一个
+            lens[idxl]--;
         }
         return ans;
     }
-
-    public void trace(int len, int[] direction, int[][] matrix) {
-        while (len-- > 0) {
-            i += direction[0];
-            j += direction[1];
-            ans.add(matrix[i][j]);
-        }
+    public static void main(String []args){
+        int [][] m ={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        System.out.println(new Solution54().spiralOrder(m));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
