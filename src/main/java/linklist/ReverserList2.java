@@ -1,4 +1,4 @@
-package leetcode.editor.cn;
+package linklist;
 //给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链
 //表节点，返回 反转后的链表 。
 // 
@@ -36,9 +36,7 @@ package leetcode.editor.cn;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
-import java.util.Optional;
 import java.util.Stack;
-import linklist.ListNode;
 
 /**
  * Definition for singly-linked list.
@@ -53,8 +51,9 @@ import linklist.ListNode;
 
 /**
  * 03-18 20:26
+ * lc.92 链表，容易出错，要手动debug
  */
-class Solution92 {
+class ReverserList2 {
     /**
      * 使用栈记录要反转的部分，前后边界容易出错
      * @param head
@@ -128,6 +127,40 @@ class Solution92 {
         }
         return dum.next;
     }
+    /**
+     * 最nb的解法，双指针 + 头插法
+     * 一个指向反转节点p的前一个节点g，一个指向p
+     * 然后把p后面的节点提拔到p前面（头插），再把g的next指向p,然后g向后移动，p的next向后移动，循环n-m+1次
+     作者：mu-yi-cheng-zhou-2
+     链接：https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/java-shuang-zhi-zhen-tou-cha-fa-by-mu-yi-cheng-zho/
+     **/
+    public ListNode reverseBetweenV3(ListNode head, int m, int n) {
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+
+        ListNode g = dummyHead;
+        ListNode p = dummyHead.next;
+
+        int step = 0;
+        while (step < m - 1) {
+            g = g.next; p = p.next;
+            step ++;
+        }
+
+        for (int i = 0; i < n - m; i++) {
+            //先删除p.next, 所以移动的是p.next,不是p
+            ListNode removed = p.next;
+            //再链接p和后半部分
+            p.next = p.next.next;
+            //再插到p前面
+            removed.next = g.next;
+            //移动g
+            g.next = removed;
+        }
+
+        return dummyHead.next;
+    }
+
     public ListNode reverse(ListNode h){
         ListNode prev = null;
         ListNode c = h;
@@ -149,7 +182,7 @@ class Solution92 {
             i++;
         }
 
-        ListNode ans = new Solution92().reverseBetweenV2(t,1,1);
+        ListNode ans = new ReverserList2().reverseBetweenV2(t,1,1);
         while (ans!=null){
             System.out.println(ans.val);
             ans = ans.next;
