@@ -1,5 +1,7 @@
-package leetcode.editor.cn;//给你一个用字符数组 tasks 表示的 CPU 需要执行的任务列表。其中每个字母表示一种不同种类的任务。任务可以以任意顺序执行，并且每个任务都可以在 1 个
-//单位时间内执行完。在任何一个单位时间，CPU 可以完成一个任务，或者处于待命状态。 
+
+package leetcode.editor.cn;
+//给你一个用字符数组 tasks 表示的 CPU 需要执行的任务列表。其中每个字母表示一种不同种类的任务。任务可以以任意顺序执行，并且每个任务都可以在 1 个
+//单位时间内执行完。在任何一个单位时间，CPU 可以完成一个任务，或者处于待命状态。
 //
 // 然而，两个 相同种类 的任务之间必须有长度为整数 n 的冷却时间，因此至少有连续 n 个单位时间内 CPU 在执行不同的任务，或者在待命状态。 
 //
@@ -51,12 +53,15 @@ package leetcode.editor.cn;//给你一个用字符数组 tasks 表示的 CPU 需
 // 👍 609 👎 0
 
 
-import java.util.Arrays;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution621 {
+<<<<<<< HEAD
     /**
      * 贪心策略出发，用几何解法得到解
      * 贪心：先为出现最多的任务分配时间片，然后向空闲时间片填充其他任务（这里想到了）
@@ -104,6 +109,7 @@ class Solution621 {
         }
         int res = (maxTimes - 1) * (n + 1) + maxCount;
         return Math.max(res, tasks.length);
+
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
