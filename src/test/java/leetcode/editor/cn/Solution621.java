@@ -51,6 +51,7 @@ package leetcode.editor.cn;//给你一个用字符数组 tasks 表示的 CPU 需
 // 👍 609 👎 0
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +63,9 @@ class Solution621 {
      * 然后，画出时间片的分配表格，二维数组（这里没想到，我用的链表，写了50行，结果还不对。。）
      * 数组的每一列是一个任务，每一行是时间片，最后求数组中有内容的节点数量，转换成求面积（几何好）
      * 最后一行要单独计算，因为执行到最后的任务，不需要再加n个时间间隔
+     *
+     * 特殊情况： 没用空隙时要单独处理，如果时间片完美占用（用时为最小值），那么用时为len(tasks)
+     *           这里面积法会得到一个小于len(tasks)的值，如：AABB n=0 面积法=3
      * respect!估计很快就忘了
      * https://leetcode-cn.com/problems/task-scheduler/solution/jian-ming-yi-dong-de-javajie-da-by-lan-s-jfl9/
      * @param tasks
@@ -81,7 +85,25 @@ class Solution621 {
                 countMax += 1;
             }
         }
-        return (maxCount - 1) * (n + 1) + countMax;
+        return Math.max((maxCount - 1) * (n + 1) + countMax,tasks.length);
+    }
+    //时间优化，char的范围有限，用数组代替map
+    public int leastInterval_(char[] tasks, int n) {
+        int[] buckets = new int[26];
+        for(int i = 0; i < tasks.length; i++){
+            buckets[tasks[i] - 'A']++;
+        }
+        Arrays.sort(buckets);
+        int maxTimes = buckets[25];
+        int maxCount = 1;
+        for(int i = 25; i >= 1; i--){
+            if(buckets[i] == buckets[i - 1])
+                maxCount++;
+            else
+                break;
+        }
+        int res = (maxTimes - 1) * (n + 1) + maxCount;
+        return Math.max(res, tasks.length);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
