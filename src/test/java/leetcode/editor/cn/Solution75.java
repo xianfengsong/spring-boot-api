@@ -89,6 +89,13 @@ class Solution75 {
         }
         System.out.println(Arrays.toString(nums));
     }
+
+    /**
+     * 一次遍历，统计0,1,2的数量，然后二次遍历，构造nums
+     * 时间 O(N),
+     * 空间 O(N)
+     * @param nums
+     */
     public void sortColorsV2(int[] nums) {
         int [] count = new int[3];
         for (int n : nums) {
@@ -103,6 +110,41 @@ class Solution75 {
             }
         }
         System.out.println(Arrays.toString(nums));
+    }
+
+    /**
+     * 双指针，这里指向的是0,1,2三个区间的间隔！，如index1和index2 [0,1) index1 [1,2) index2  [2,n-1]
+     * @param nums
+     */
+    public void sortColorsV3(int[] nums) {
+        // 值为0的最后一个节点位置
+        int zero = 0;
+        // 值为1的最后一个节点位置，遍历指针,指向1，2之间的节点
+        int i = 0;
+        // 值为2的第一个节点位置 ，1,2 和 2,～ 的分界点
+        int two = nums.length-1;
+        while (i<two){
+            if(nums[i]==0){
+                swap(nums,i,zero);
+                //发现0,后移
+                zero++;
+                //位置i被0占用了，先后移
+                i++;
+            }else if(nums[i]==1){
+                //发现1,后移
+                i++;
+            }else {
+                swap(nums,i,two);
+                //发现2，前移
+                two--;
+            }
+        }
+        System.out.println(Arrays.toString(nums));
+    }
+    public void swap(int []nums,int a,int b){
+        int t = nums[a];
+        nums[a] = nums[b];
+        nums[b] = t;
     }
     public static void main(String []args){
         int [] nums = new int[]{2,0,2,1,1,0};
