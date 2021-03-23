@@ -55,13 +55,13 @@ package leetcode.editor.cn;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution621 {
-<<<<<<< HEAD
     /**
      * 贪心策略出发，用几何解法得到解
      * 贪心：先为出现最多的任务分配时间片，然后向空闲时间片填充其他任务（这里想到了）
