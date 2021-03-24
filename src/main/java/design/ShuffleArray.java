@@ -1,8 +1,5 @@
 package design;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -18,7 +15,6 @@ public class ShuffleArray {
      * 测试shuffle后的分布，不是100%的随机
      * 如果测试次数不够多，case不会通过
      */
-    @Test
     public void test() {
         int s = 3;
         int[] arr = new int[s];
@@ -45,8 +41,6 @@ public class ShuffleArray {
             sum += st.get(k);
             System.out.println(k);
         }
-        Assert.assertEquals(allCase * 3, sum);
-        Assert.assertEquals(allCase, st.size());
     }
 
     String getString(int[] arr) {
