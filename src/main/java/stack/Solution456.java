@@ -132,6 +132,7 @@ class Solution456 {
 
     /**
      * O(n) 用单调栈代替treemap,同样是存储i,k，遍历j
+     *
      * @param nums
      * @return
      */
@@ -164,9 +165,11 @@ class Solution456 {
         }
         return false;
     }
+
     /**
      * O(n) 用单调栈代替treemap
      * 优化，不需要保存i,改成固定j,k，遍历i
+     *
      * @param nums
      * @return
      */
@@ -179,23 +182,24 @@ class Solution456 {
         Stack<Integer> stack = new Stack<>();
         //记录k,代表nums[k]的值，比k大的保存在栈里（nums[j]）
         int k = Integer.MIN_VALUE;
-        for(int i=nums.length-1;i>=0;i--){
+        for (int i = nums.length - 1; i >= 0; i--) {
             //已存在有nums[j]>k
-            if(nums[i]<k){
+            if (nums[i] < k) {
                 return true;
             }
-            while (!stack.isEmpty()&&stack.peek()<nums[i]){
+            while (!stack.isEmpty() && stack.peek() < nums[i]) {
                 k = stack.pop();
             }
             stack.push(nums[i]);
         }
         return false;
     }
+
     public static void main(String[] args) {
         //2，1，-2
         //2， k=1 -2,2,1
         //2,
-        int[] nums = {3,1,2,4,2};
+        int[] nums = {3, 1, 2, 4, 2};
 
         boolean result = new Solution456().find132pattern_3(nums);
         System.out.println(result);
