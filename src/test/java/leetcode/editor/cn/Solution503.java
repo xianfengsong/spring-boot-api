@@ -17,11 +17,12 @@ package leetcode.editor.cn;//给定一个循环数组（最后一个元素的下
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
+import java.util.Arrays;
 import java.util.Stack;
 
 /**
  * lc.503 下一个更大元素II
- * 单调栈练习
+ * 单调栈练习，环形数组，遍历两遍解决
  */
 class Solution503 {
 
@@ -41,6 +42,30 @@ class Solution503 {
             st.push(nums[i % len]);
         }
         return ans;
+    }
+
+    /**
+     * 优化
+     * @param nums
+     * @return
+     */
+    public int[] nextGreaterElements1(int[] nums) {
+        int n = nums.length;
+        int [] res = new int[n];
+        //默认-1
+        Arrays.fill(res, -1);
+        //保存索引，不保存值
+        Stack <Integer> stack = new Stack<>();
+        for (int i = 0; i < n*2; i++){
+            int num = nums[i % n];
+            //逆向：prevSmaller 前一个小于i的值
+            while(!stack.isEmpty() && num > nums[stack.peek()]){
+                res[stack.pop()] = num;
+            }
+            //减少内存啊
+            if(i < n) stack.add(i);
+        }
+        return res;
     }
     public static void main(String []args){
         int [] n = {1,2,1};
