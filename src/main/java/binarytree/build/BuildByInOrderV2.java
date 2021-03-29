@@ -16,7 +16,8 @@ public class BuildByInOrderV2 {
     public void test() {
         int[] inorder = new int[]{9, 3, 15, 20, 7};
         int[] postorder = new int[]{9, 15, 7, 20, 3};
-        buildTree(inorder, postorder);
+        TreeNode t = buildTree(inorder, postorder);
+        System.out.println(t);
     }
 
     public TreeNode buildTree(int[] inorder, int[] postorder) {
@@ -41,7 +42,7 @@ public class BuildByInOrderV2 {
         }
         int leftSize = index - inStart;
         //根据上面的规则，找到后序数组的起止位置
-        root.left = getRoot(inOrder, inStart, index - 1, postOrder, pStart, pStart + (index - inStart) - 1);
+        root.left = getRoot(inOrder, inStart, index - 1, postOrder, pStart, pStart + leftSize - 1);
         root.right = getRoot(inOrder, index + 1, inEnd, postOrder, pStart + leftSize, pEnd - 1);
         return root;
     }
