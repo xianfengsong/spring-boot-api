@@ -1,7 +1,5 @@
 package array;
 
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.util.Arrays;
 
@@ -45,13 +43,12 @@ public class CountLowerInRight {
         return s;
     }
 
-    @Test
     public void test() {
         int[] source = new int[]{5, 2, 6, 1};
         int[] expect = new int[]{2, 1, 1, 0};
         int[] result = count(source);
         for (int i = 0; i < source.length; i++) {
-            Assert.assertEquals(expect[i], result[i]);
+            System.out.println(expect[i]==result[i]);
         }
 
     }

@@ -1,7 +1,5 @@
 package array;
 
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * author Xianfeng <br/>
@@ -64,14 +62,13 @@ public class GameOfLife {
         }
     }
 
-    @Test
     public void test() {
         int[][] board = new int[][]{{0, 1, 0}, {0, 0, 1}, {1, 1, 1}, {0, 0, 0}};
         int[][] out = new int[][]{{0, 0, 0}, {1, 0, 1}, {0, 1, 1}, {0, 1, 0}};
         gameOfLife(board);
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                Assert.assertEquals(board[i][j], out[i][j]);
+                System.out.println(board[i][j]==out[i][j]);
             }
         }
     }
