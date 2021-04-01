@@ -55,6 +55,9 @@ class Solution90 {
         //前序遍历二叉树，左右子树是否把当前节点加入list，树高度由数组大小决定
         preorder(0, nums, new ArrayList<>());
         Set<String> trim = new HashSet<>();
+        System.out.println(result);
+        System.out.println("size="+result.size());
+
         return result.stream().filter(l -> trim.add(l.toString())).collect(Collectors.toList());
     }
 
@@ -122,32 +125,28 @@ class Solution90 {
         Arrays.sort(nums);
         //前序遍历二叉树，左右子树是否把当前节点加入list，树高度由数组大小决定
         dfs(0, nums, new ArrayList<>());
-        Set<String> trim = new HashSet<>();
-        return result.stream().filter(l -> trim.add(l.toString())).collect(Collectors.toList());
+        System.out.println(result);
+        System.out.println("size="+result.size());
+
+        return result;
     }
 
     private void dfs(int i, int[] nums, List<Integer> list) {
-        if (i < nums.length) {
-            //添加i
+        if(i==nums.length){
+            result.add(new ArrayList<>(list));
+        }
+        for(;i<nums.length;i++){
             list.add(nums[i]);
-            if (i != 0 && nums[i] == nums[i - 1]) {
-                //跳过！为啥？不知道。。。
-                i++;
-            }
-            dfs(i + 1, nums, list);
-            //去掉i
-            list.remove(list.size() - 1);
-            dfs(i + 1, nums, list);
-        } else {
-            //复制新对象
-            List<Integer> t = new ArrayList<>(list);
-            result.add(t);
+            dfs(i+1,nums,list);
+            list.remove(list.size()-1);
+            dfs(i+1,nums,list);
         }
     }
 
     public static void main(String[] args) {
-        int[] n = {4, 4, 4, 1, 4};
-        System.out.println(new Solution90().subsetsWithDup2(n));
+        int[] n = {1,2};
+        List<List<Integer>> result = new Solution90().subsetsWithDup2(n);
+        System.out.println(result);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
