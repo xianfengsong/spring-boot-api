@@ -53,6 +53,7 @@ class Solution90 {
         //为了处理，顺序不同，但是元素相同的子集
         Arrays.sort(nums);
         //前序遍历二叉树，左右子树是否把当前节点加入list，树高度由数组大小决定
+        //遍历二叉树所有路径，到叶子节点才保存路径
         preorder(0, nums, new ArrayList<>());
         Set<String> trim = new HashSet<>();
         System.out.println(result);
@@ -123,7 +124,8 @@ class Solution90 {
     public List<List<Integer>> subsetsWithDup2(int[] nums) {
         //为了处理，顺序不同，但是元素相同的子集
         Arrays.sort(nums);
-        //前序遍历二叉树，左右子树是否把当前节点加入list，树高度由数组大小决定
+        //这里的思想不是二叉树，r的每个分支代表选择r之后剩余的选择，r的子树是以r开头的所有路径，分叉由nums个数决定
+        //树的高度不等于nums大小
         dfs(0, nums, new ArrayList<>());
         System.out.println(result);
         System.out.println("size="+result.size());
@@ -132,19 +134,17 @@ class Solution90 {
     }
 
     private void dfs(int i, int[] nums, List<Integer> list) {
-        if(i==nums.length){
-            result.add(new ArrayList<>(list));
-        }
+        //立刻保存路径
+        result.add(new ArrayList<>(list));
         for(;i<nums.length;i++){
             list.add(nums[i]);
             dfs(i+1,nums,list);
             list.remove(list.size()-1);
-            dfs(i+1,nums,list);
         }
     }
 
     public static void main(String[] args) {
-        int[] n = {1,2};
+        int[] n = {1,2,3};
         List<List<Integer>> result = new Solution90().subsetsWithDup2(n);
         System.out.println(result);
     }
