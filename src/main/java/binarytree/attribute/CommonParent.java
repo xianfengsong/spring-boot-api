@@ -1,7 +1,6 @@
 package binarytree.attribute;
 
 import binarytree.TreeNode;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
  * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
  */
 public class CommonParent {
-    @Test
     public void t() {
         TreeNode root = new TreeNode(1);
         TreeNode l = new TreeNode(2);

@@ -1,7 +1,6 @@
 package binarytree.build;
 
 import binarytree.TreeNode;
-import org.junit.Test;
 
 //timeout
 
@@ -12,7 +11,6 @@ import org.junit.Test;
  * 后序数组的前x个节点也一定在左子树
  */
 public class BuildByInOrderV2 {
-    @Test
     public void test() {
         int[] inorder = new int[]{9, 3, 15, 20, 7};
         int[] postorder = new int[]{9, 15, 7, 20, 3};

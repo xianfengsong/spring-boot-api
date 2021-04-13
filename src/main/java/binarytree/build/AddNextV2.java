@@ -23,6 +23,8 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class AddNextV2 {
+
+
     public Node connect(Node root) {
         if (root == null) {
             return root;
@@ -53,6 +55,43 @@ public class AddNextV2 {
         }
         connect(node.left, level + 1, list);
         connect(node.right, level + 1, list);
+    }
+
+    /**
+     * 纯递归解法
+     * 递归内容，对每个节点n,为n的左右节点填充next引用，对于右边节点可以从n.next来得到
+     * 递归边界，节点为空
+     * 递归顺序，root right left
+     * 难点：注意递归顺序，处理空节点
+     * @param root
+     * @return
+     */
+    public Node connect1(Node root) {
+        if (root == null) {
+            return null;
+        }
+        //找到当前节点可用的next
+        Node next = root.next;
+        while (next != null && next.left == null && next.right == null) {
+            next = next.next;
+        }
+        //1：l不为空 2：r不为空 3：lr都不为空
+        if (root.left != null) {
+            root.left.next = root.right;
+            if (next != null) {
+                if (root.right == null) {
+                    root.left.next = next.left == null ? next.right : next.left;
+                } else {
+                    root.right.next = next.left == null ? next.right : next.left;
+                }
+            }
+        } else if (root.right != null && next != null) {
+            root.right.next = next.left == null ? next.right : next.left;
+        }
+        //关键：要先处理右子树，这样下次递归才可以得到可用的next节点
+        connect1(root.right);
+        connect1(root.left);
+        return root;
     }
 
     class Node {
