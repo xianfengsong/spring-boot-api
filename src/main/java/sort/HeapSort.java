@@ -1,5 +1,7 @@
 package sort;
 
+import java.util.Arrays;
+
 /**
  * author Xianfeng <br/>
  * date 19-6-28 上午10:50 <br/>
@@ -10,6 +12,7 @@ package sort;
  * 3.构造大根堆后，排序通过不断交换根节点和最后一个节点完成（升序排序，构造小根堆也可以吧？）
  */
 public class HeapSort implements Sort {
+
     @Override
     public void sort(Integer[] arr) {
         buildMaxHeap(arr);
@@ -25,7 +28,12 @@ public class HeapSort implements Sort {
     }
 
     private void buildMaxHeap(Integer[] arr) {
-        for (int i = (int) Math.floor(arr.length / 2); i >= 0; i--) {
+        //start是数组中最后一个非叶子节点
+        //最后一个根节点就是最后一个节点的parent
+        //没有child的非叶子节点没有必要调整（当然从arr.length-1开始也行）
+        int lastIndex = arr.length - 1;
+        int start = (lastIndex - 1) / 2;
+        for (int i = start; i >= 0; i--) {
             heapify(arr, i, arr.length);
         }
     }
@@ -44,8 +52,15 @@ public class HeapSort implements Sort {
         if (max != root) {
             //最大节点值放到root上
             swap(arr, root, max);
-            //给root节点的初始值(现在是arr[max])找到合适位置
+            //给新的root节点的初始值找到合适位置
             heapify(arr, max, len);
         }
+    }
+
+    public static void main(String[] args) {
+        Integer[] arr = {4, 10, 3, 5, 1};
+        HeapSort sort = new HeapSort();
+        sort.sort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 }
