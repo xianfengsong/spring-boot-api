@@ -42,7 +42,7 @@ import java.util.Arrays;
 import java.util.TreeSet;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class Solution363 {
 
     public int maxSumSubmatrix(int[][] matrix, int k) {
         if (matrix.length == 0) {
@@ -80,7 +80,7 @@ class Solution {
 
     public static void main(String[] args) {
         int[][] m = new int[][]{{1}, {2}, {3}};
-        new Solution().maxSumSubmatrix(m, 2);
+        new Solution363().maxSumSubmatrix(m, 2);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
