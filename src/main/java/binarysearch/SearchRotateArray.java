@@ -1,7 +1,5 @@
 package binarysearch;
 
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * author Xianfeng <br/>
@@ -67,9 +65,5 @@ public class SearchRotateArray {
         return -1;
     }
 
-    @Test
-    public void target() {
-        Assert.assertEquals(1, search(3));
-    }
 
 }
