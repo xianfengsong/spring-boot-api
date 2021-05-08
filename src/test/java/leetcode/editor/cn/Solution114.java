@@ -92,7 +92,7 @@ class Solution114 {
         cur.right = r;
     }
     public static void main(String []args){
-        System.out.println((Math.pow(2,14)-1)%16383);
+        System.out.println(Math.sqrt(3)-(int)Math.sqrt(3));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
