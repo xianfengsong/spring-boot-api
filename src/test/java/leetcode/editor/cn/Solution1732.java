@@ -40,6 +40,9 @@ package leetcode.editor.cn;//给你一个整数数组 jobs ，其中 jobs[i] 是
 //leetcode submit region begin(Prohibit modification and deletion)
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * no.1732 把数组划分为k个最平均的子集
@@ -54,20 +57,22 @@ class Solution1732 {
      */
     public int minimumTimeRequired(int[] jobs, int k) {
         works = new int[k];
-        dfs(jobs, 0, 0);
+        dfs1(jobs, 0, 0);
+        Set<String> s= new HashSet<>();
+        s.remove("");
         return ans;
     }
 
     /**
      * 这里没想到，只会套模板，看下
-     *
+     * 每次选择的子节点是工人的集合，根节点是任务
      * @param jobs
      * @param i
      * @param max
      */
     public void dfs(int[] jobs, int i, int max) {
         if (max >= ans) {
-            //ans只能减小
+            //剪枝：ans只能减小
             return;
         }
         if (i == jobs.length) {
@@ -82,6 +87,37 @@ class Solution1732 {
             //更新当前最大公时
             dfs(jobs, i + 1, Math.max(max, works[j]));
             works[j] -= jobs[i];
+        }
+    }
+
+    /**
+     * 调整分配策略，从原来的按顺序分，改成按空闲程度分，因为目的就是越平均越好
+     * @param jobs
+     * @param i
+     * @param max
+     */
+    public void dfs1(int[] jobs, int i, int max) {
+        if (max >= ans) {
+            //剪枝：ans只能减小
+            return;
+        }
+        if (i == jobs.length) {
+            ans = max;
+            System.out.println("ans=max=" + max +" ,works="+ Arrays.toString(works));
+            return;
+        }
+        //让i随每次调用递增就行！
+        Integer [] index = new Integer[works.length];
+        for(int j=0;j<works.length;j++){
+            index[j]=j;
+        }
+        Arrays.sort(index, Comparator.comparingInt(o -> works[o]));
+        for (int j = 0; j < index.length; j++) {
+            works[index[j]] += jobs[i];
+            System.out.println("i=" + i + ",j=" + j + ",hour=" + works[index[j]]);
+            //更新当前最大公时
+            dfs1(jobs, i + 1, Math.max(max, works[index[j]]));
+            works[index[j]] -= jobs[i];
         }
     }
 

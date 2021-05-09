@@ -50,7 +50,9 @@ import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution39 {
+
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        //让数组有序，可以执行剪枝
         Arrays.sort(candidates);
         List<List<Integer>> ans = new ArrayList<>();
         dfs(0, candidates, new ArrayList<>(), ans, target);
@@ -65,17 +67,20 @@ class Solution39 {
         for (; i < nums.length; i++) {
             if (nums[i] <= target) {
                 path.add(nums[i]);
-                dfs(i, nums, path, ans, target-nums[i]);
+                //nums中的数字可以重复使用，所以i不变
+                dfs(i, nums, path, ans, target - nums[i]);
                 path.remove(path.size() - 1);
             } else {
+                //剪枝：因为数组有序，而且num[i]>target所以没必要继续向下遍历
                 break;
             }
         }
     }
-    public static void main(String []args){
+
+    public static void main(String[] args) {
         Solution39 s = new Solution39();
-        int [] n = {2,3,5};
-        System.out.println(s.combinationSum(n,8));
+        int[] n = {2, 3, 6, 7};
+        System.out.println(s.combinationSum(n, 7));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
