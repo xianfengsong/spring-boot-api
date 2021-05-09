@@ -55,7 +55,6 @@ public class TopKProblems {
         }
         int p;
         while ((p = (i - 1) / 2) >= 0) {
-            System.out.println("compare p=" + p + ",i=" + i);
             if (nums[p] < nums[i]) {
                 swap(nums, p, i);
                 i = p;
