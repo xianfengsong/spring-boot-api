@@ -45,10 +45,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * no.1732 把数组划分为k个最平均的子集
+ * no.1723 把数组划分为k个最平均的子集
  * 考察对暴力回溯不断优化
  */
-class Solution1732 {
+class Solution1723 {
     int ans = Integer.MAX_VALUE;
     int[] works;
 
@@ -122,7 +122,7 @@ class Solution1732 {
     }
 
     public static void main(String[] args) {
-        Solution1732 s = new Solution1732();
+        Solution1723 s = new Solution1723();
         int[] jobs = {1, 2,3};
         int ans = s.minimumTimeRequired(jobs, 2);
         System.out.println(ans);
