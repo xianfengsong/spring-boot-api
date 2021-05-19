@@ -22,7 +22,8 @@ package dp;
 /**
  * 打家劫舍III
  * 暴力解决，先化简成3个节点，列举所有情况，发现规律编写代码，然后优化存储空间
- * 既然是树形结构，那么首先要考虑 dfs , bfs 遍历
+ * 既然是树形结构，那么首先要考虑 dfs , bfs
+ * 遍历顺序 前中后 选一个
  * https://leetcode-cn.com/problems/house-robber-iii
  */
 public class Robber3 {
